@@ -1,0 +1,70 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid" style="padding-left:0">
+        <a class="navbar-brand Lexend-900" href="">
+            <svg xmlns="http://www.w3.org/2000/svg" width="5rem" height="3rem" overflow="auto" version="1.0" viewBox="-3 -3 184 134" preserveAspectRatio="xMidYMid meet" transform="matrix(1, 0, 0, 1, 0, 0)">
+                <g id="deeditor_bgCarrier" stroke-width="0">
+                    <rect id="dee_c_e" x="2" y="2" width="170" height="120" rx="0" fill="#f9fafb" strokewidth="0" />
+                </g>
+
+                <g transform="translate(0.000000,128.000000) scale(0.100000,-0.100000)" fill="#001C30" stroke="none">
+                    <path d="M0 640 l0 -640 890 0 890 0 0 640 0 640 -890 0 -890 0 0 -640z m1718 542 c10 -7 12 -123 10 -548 l-3 -539 -825 0 -825 0 0 85 0 85 143 3 142 3 0 447 c0 335 3 451 12 460 9 9 172 12 673 12 363 0 666 -4 673 -8z" fill="#001C30" />
+                    <path d="M430 695 l0 -425 435 0 435 0 0 425 0 425 -435 0 -435 0 0 -425z m788 343 c19 -19 17 -561 -2 -577 -9 -8 -113 -11 -362 -9 l-349 3 -3 285 c-1 157 0 290 3 297 6 18 695 19 713 1z m7 -678 c0 -23 -4 -25 -45 -25 -36 0 -45 4 -48 19 -6 28 22 45 61 37 26 -6 32 -12 32 -31z m-150 0 c0 -18 -6 -26 -23 -28 -13 -2 -25 3 -28 12 -10 26 4 48 28 44 17 -2 23 -10 23 -28z" fill="#001C30" />
+                    <path d="M560 750 l0 -230 300 0 300 0 0 230 0 230 -300 0 -300 0 0 -230z" fill="#001C30" />
+                    <path d="M130 180 c0 -20 7 -20 435 -20 428 0 435 0 435 20 0 20 -7 20 -435 20 -428 0 -435 0 -435 -20z" fill="#001C30" />
+                </g>
+            </svg>
+            <h4 style="display:inline-block; color:#75C2F6;" class="fw-bolder"> <i>T-BOT</i></h4>
+        </a>
+        
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    
+</div>
+
+<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+    <nav class="flex-column Lexend-400">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="counter">
+                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="fetchdata">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="CrawlerInterface">
+                <span class="oi oi-plus" aria-hidden="true"></span> Crawler
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="login">
+                <span class="oi oi-plus" aria-hidden="true"></span> Login
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="register">
+                <span class="oi oi-plus" aria-hidden="true"></span> Register
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

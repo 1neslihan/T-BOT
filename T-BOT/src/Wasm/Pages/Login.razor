@@ -1,0 +1,224 @@
+﻿@page "/login";
+@using Application.Features.Auth.Commands.Login;
+@using Newtonsoft.Json;
+@using System.Text;
+@using Newtonsoft.Json.Linq;
+@layout NoMenuLayout;
+@inject HttpClient httpClient
+@inject IJSRuntime JSRuntime
+@inject NavigationManager navigationManager
+
+<PageTitle>Login</PageTitle>
+
+<div class="col-4 mx-auto d-flex flex-column align-items-center text-center mb-3 pt-3 Lexend-900">
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="15rem" height="10rem" overflow="auto" version="1.0" viewBox="-3 -3 184 134" preserveAspectRatio="xMidYMid meet" transform="matrix(1, 0, 0, 1, 0, 0)">
+        <g id="deeditor_bgCarrier" stroke-width="0">
+            <rect id="dee_c_e" x="1" y="1" width="170" height="120" rx="0" fill="#001C30" strokewidth="0" />
+        </g>
+
+        <g transform="translate(0.000000,128.000000) scale(0.100000,-0.100000)" fill="#f9fafb" stroke="none">
+            <path d="M0 640 l0 -640 890 0 890 0 0 640 0 640 -890 0 -890 0 0 -640z m1718 542 c10 -7 12 -123 10 -548 l-3 -539 -825 0 -825 0 0 85 0 85 143 3 142 3 0 447 c0 335 3 451 12 460 9 9 172 12 673 12 363 0 666 -4 673 -8z" fill="#f9fafb" />
+            <path d="M430 695 l0 -425 435 0 435 0 0 425 0 425 -435 0 -435 0 0 -425z m788 343 c19 -19 17 -561 -2 -577 -9 -8 -113 -11 -362 -9 l-349 3 -3 285 c-1 157 0 290 3 297 6 18 695 19 713 1z m7 -678 c0 -23 -4 -25 -45 -25 -36 0 -45 4 -48 19 -6 28 22 45 61 37 26 -6 32 -12 32 -31z m-150 0 c0 -18 -6 -26 -23 -28 -13 -2 -25 3 -28 12 -10 26 4 48 28 44 17 -2 23 -10 23 -28z" fill="#f9fafb" />
+            <path d="M560 750 l0 -230 300 0 300 0 0 230 0 230 -300 0 -300 0 0 -230z" fill="#f9fafb" />
+            <path d="M130 180 c0 -20 7 -20 435 -20 428 0 435 0 435 20 0 20 -7 20 -435 20 -428 0 -435 0 -435 -20z" fill="#f9fafb" />
+        </g>
+    </svg>
+    <h1 class="display-4 Lexend-900" style="color:#75C2F6;"><i>T-BOT</i></h1>
+    <h4 class="pt-2 fw-bold shadowText">Sign in to your account</h4>
+
+</div>
+<div class="col-xl-3 col-lg-4 col-md-5 col-sm-6 col-6 mx-auto  text-center Lexend fw-bold" style="color:#F34441; visibility: @(errorMessage ? "visible" : "hidden" )">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+    </svg> Incorrect email or password
+</div>
+
+<div class="col-xl-3 col-lg-4 col-md-5 col-sm-6 col-6 mx-auto  text-center Lexend-900">
+
+    <form>
+        <div style="width:100%;" class="mt-4 text-start">
+            <div class="pb-3">
+                <label for="email" class="pb-2 fw-bold text-sm">Email Address</label>
+                <input type="email" @bind="email" @oninput="HandleEmailInput" name="email" class="form-control" id="email" style="border:solid; border-color:#001C30;">
+            </div>
+            <div class="pb-4"
+            <label for="password" class="pb-2 fw-bold text-sm">Password</label>
+            <input type="password" @bind="password" @oninput="HandlePasswordInput" name="password" class="form-control" id="password" style="border:solid; border-color:#001C30;">
+        </div>
+
+
+        </div>
+    </form>
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn navyBlue fw-bold" style="border:solid; border-color:#001C30;" @onclick="HandleLogin">
+            Sign In
+        </button>
+        <button type="submit" class="btn bg-light hoveredBorder fw-bold" style="color:#001C30;" @onclick="HandleGoogleLogin">
+            <svg style="height:20px; width:20px;"
+                 xmlns="http://www.w3.org/2000/svg"
+                 xmlnsXlink="http://www.w3.org/1999/xlink"
+                 width="800px"
+                 height="800px"
+                 viewBox="-0.5 0 48 48"
+                 version="1.1">
+                {" "}
+                <title>Google-color</title>
+                <desc>Created with Sketch.</desc>{" "}
+                <defs> </defs>{" "}
+                <g id="Icons"
+                   stroke="none"
+                   strokeWidth="1"
+                   fill="none"
+                   fillRule="evenodd">
+                    {" "}
+                    <g id="Color-" transform="translate(-401.000000, -860.000000)">
+                        {" "}
+                        <g id="Google" transform="translate(401.000000, 860.000000)">
+                            {" "}
+                            <path d="M9.82727273,24 C9.82727273,22.4757333 10.0804318,21.0144 10.5322727,19.6437333 L2.62345455,13.6042667 C1.08206818,16.7338667 0.213636364,20.2602667 0.213636364,24 C0.213636364,27.7365333 1.081,31.2608 2.62025,34.3882667 L10.5247955,28.3370667 C10.0772273,26.9728 9.82727273,25.5168 9.82727273,24"
+                                  id="Fill-1"
+                                  fill="#FBBC05">
+                                {" "}
+                            </path>{" "}
+                            <path d="M23.7136364,10.1333333 C27.025,10.1333333 30.0159091,11.3066667 32.3659091,13.2266667 L39.2022727,6.4 C35.0363636,2.77333333 29.6954545,0.533333333 23.7136364,0.533333333 C14.4268636,0.533333333 6.44540909,5.84426667 2.62345455,13.6042667 L10.5322727,19.6437333 C12.3545909,14.112 17.5491591,10.1333333 23.7136364,10.1333333"
+                                  id="Fill-2"
+                                  fill="#EB4335">
+                                {" "}
+                            </path>{" "}
+                            <path d="M23.7136364,37.8666667 C17.5491591,37.8666667 12.3545909,33.888 10.5322727,28.3562667 L2.62345455,34.3946667 C6.44540909,42.1557333 14.4268636,47.4666667 23.7136364,47.4666667 C29.4455,47.4666667 34.9177955,45.4314667 39.0249545,41.6181333 L31.5177727,35.8144 C29.3995682,37.1488 26.7323182,37.8666667 23.7136364,37.8666667"
+                                  id="Fill-3"
+                                  fill="#34A853">
+                                {" "}
+                            </path>{" "}
+                            <path d="M46.1454545,24 C46.1454545,22.6133333 45.9318182,21.12 45.6113636,19.7333333 L23.7136364,19.7333333 L23.7136364,28.8 L36.3181818,28.8 C35.6879545,31.8912 33.9724545,34.2677333 31.5177727,35.8144 L39.0249545,41.6181333 C43.3393409,37.6138667 46.1454545,31.6490667 46.1454545,24"
+                                  id="Fill-4"
+                                  fill="#4285F4">
+                                {" "}
+                            </path>{" "}
+                        </g>{" "}
+                    </g>{" "}
+                </g>{" "}
+            </svg>
+            Continue with Google
+        </button>
+    </div>
+    <p class="pt-3 text-secondary">Not a member? <span class="fw-bold" style="color:#001C30; cursor:pointer;">Register Now!</span></p>
+</div>
+
+@code {
+    private const string BASE_URL = "https://localhost:7090/api";
+    private bool errorMessage = false;
+    private string email;
+    private string password;
+
+    public async Task HandleLogin(MouseEventArgs e)
+    {
+
+        var loginRequest = new AuthLoginCommand()
+            {
+                Email = email,
+                Password = password
+            };
+
+
+        try
+        {
+            var loginResponse = await SendHttpPostRequest<AuthLoginCommand, object>(httpClient, $"{BASE_URL}/Authentication/Login", loginRequest);
+            var jsonResponse = JsonConvert.SerializeObject(loginResponse);
+            // JSON verisini localStorage'e kaydet
+            //await JSRuntime.InvokeVoidAsync("localStorage.setItem", "loginResponse", jsonResponse);
+
+            // JSON verisini ayrıştırarak accessToken ve expires değerlerini al
+            var jsonObject = JObject.Parse(jsonResponse);
+            var accessToken = jsonObject["accessToken"].ToString();
+            var expires = jsonObject["expires"].ToString();
+
+            // accessToken ve expires değerlerini ayrı ayrı localStorage'e kaydet
+            await JSRuntime.InvokeVoidAsync("localStorage.setItem", "accessToken", accessToken);
+            await JSRuntime.InvokeVoidAsync("localStorage.setItem", "expires", expires);
+            navigationManager.NavigateTo("/");
+        }
+        catch (HttpRequestException ex)
+        {
+            errorMessage = true;
+        }
+
+
+
+    }
+
+    private void HandleGoogleLogin()
+    {
+        navigationManager.NavigateTo($"{BASE_URL}/Authentication/GoogleSignInStart");
+    }
+
+    private void HandleEmailInput(ChangeEventArgs e)
+    {
+        email = e.Value.ToString();
+
+    }
+
+    private void HandlePasswordInput(ChangeEventArgs e)
+    {
+        password = e.Value.ToString();
+
+    }
+
+    public async Task<TResponse> SendHttpPostRequest<TRequest, TResponse>(HttpClient httpClient, string url, TRequest payload)
+    {
+        var jsonPayload = JsonConvert.SerializeObject(payload);
+        var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+        // Authorization başlığını ayarla
+        //httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+
+
+        var response = await httpClient.PostAsync(url, httpContent);
+        response.EnsureSuccessStatusCode();
+
+        var jsonResponse = await response.Content.ReadAsStringAsync();
+        var responseObject = JsonConvert.DeserializeObject<TResponse>(jsonResponse);
+        //Console.WriteLine($"Response: {responseObject}");
+
+        return responseObject;
+    }
+}
+
+<style>
+    body {
+        display: flex;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .Lexend-900 {
+        font-family: 'Lexend', sans-serif;
+        font-weight: 900;
+    }
+
+    .navyBlue {
+        background-color: #001C30;
+        color: #f9fafb;
+    }
+
+        .navyBlue:hover {
+            opacity: 0.85;
+            color: white;
+        }
+
+    .hoveredBorder {
+        border: solid;
+        border-color: #001C30;
+    }
+
+        .hoveredBorder:hover {
+            border: solid;
+            border-color: #75C2F6;
+        }
+
+    .shadowText {
+        text-shadow: 1px 1px 1px #75C2F6, 2px 2px 2px #001C30;
+    }
+</style>
+

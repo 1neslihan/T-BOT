@@ -1,0 +1,277 @@
+2023-08-15 12:12:03.195 +03:00 [INF] User profile is available. Using 'C:\Users\DL_ne\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2023-08-15 12:12:03.562 +03:00 [INF] Now listening on: https://localhost:7090
+2023-08-15 12:12:03.565 +03:00 [INF] Now listening on: http://localhost:5070
+2023-08-15 12:12:03.568 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-08-15 12:12:03.569 +03:00 [INF] Hosting environment: Development
+2023-08-15 12:12:03.570 +03:00 [INF] Content root path: C:\Users\DL_ne\OneDrive\Masaüstü\Github\Trendyol-Bot\T-BOT\src\WebApi
+2023-08-15 12:12:09.138 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/swagger/index.html - -
+2023-08-15 12:12:09.863 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/swagger/index.html - - - 200 - text/html;charset=utf-8 725.3124ms
+2023-08-15 12:12:20.113 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/_framework/aspnetcore-browser-refresh.js - -
+2023-08-15 12:12:20.490 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/_framework/aspnetcore-browser-refresh.js - - - 200 12344 application/javascript;+charset=utf-8 377.2965ms
+2023-08-15 12:12:21.943 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/_vs/browserLink - -
+2023-08-15 12:12:21.992 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 48.9538ms
+2023-08-15 12:12:36.098 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/swagger/v1/swagger.json - -
+2023-08-15 12:12:37.104 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 1006.4368ms
+2023-08-15 12:13:14.888 +03:00 [INF] User profile is available. Using 'C:\Users\DL_ne\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2023-08-15 12:13:15.135 +03:00 [INF] Now listening on: https://localhost:7090
+2023-08-15 12:13:15.137 +03:00 [INF] Now listening on: http://localhost:5070
+2023-08-15 12:13:15.140 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-08-15 12:13:15.141 +03:00 [INF] Hosting environment: Development
+2023-08-15 12:13:15.142 +03:00 [INF] Content root path: C:\Users\DL_ne\OneDrive\Masaüstü\Github\Trendyol-Bot\T-BOT\src\WebApi
+2023-08-15 12:14:17.817 +03:00 [INF] User profile is available. Using 'C:\Users\DL_ne\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2023-08-15 12:14:18.080 +03:00 [INF] Now listening on: https://localhost:7090
+2023-08-15 12:14:18.085 +03:00 [INF] Now listening on: http://localhost:5070
+2023-08-15 12:14:18.089 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-08-15 12:14:18.123 +03:00 [INF] Hosting environment: Development
+2023-08-15 12:14:21.245 +03:00 [INF] Content root path: C:\Users\DL_ne\OneDrive\Masaüstü\Github\Trendyol-Bot\T-BOT\src\WebApi
+2023-08-15 12:14:22.900 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/swagger/index.html - -
+2023-08-15 12:14:24.571 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/swagger/index.html - - - 200 - text/html;charset=utf-8 1682.4315ms
+2023-08-15 12:14:30.117 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/_framework/aspnetcore-browser-refresh.js - -
+2023-08-15 12:14:30.150 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/_framework/aspnetcore-browser-refresh.js - - - 200 12344 application/javascript;+charset=utf-8 32.6550ms
+2023-08-15 12:14:30.380 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/_vs/browserLink - -
+2023-08-15 12:14:30.410 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 30.0589ms
+2023-08-15 12:14:34.107 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/swagger/v1/swagger.json - -
+2023-08-15 12:14:36.399 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 2292.4151ms
+2023-08-15 12:14:44.822 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7090/api/Authentication/Login - -
+2023-08-15 12:14:44.945 +03:00 [INF] CORS policy execution successful.
+2023-08-15 12:14:44.949 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7090/api/Authentication/Login - - - 204 - - 127.1846ms
+2023-08-15 12:14:44.962 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7090/api/Authentication/Login application/json;+charset=utf-8 56
+2023-08-15 12:14:44.965 +03:00 [INF] CORS policy execution successful.
+2023-08-15 12:14:45.489 +03:00 [INF] Executing endpoint 'WebApi.Controllers.AuthenticationController.LoginAsync (WebApi)'
+2023-08-15 12:14:45.734 +03:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(Application.Features.Auth.Commands.Login.AuthLoginCommand) on controller WebApi.Controllers.AuthenticationController (WebApi).
+2023-08-15 12:14:51.442 +03:00 [WRN] The 'bool' property 'EmailNotification' on entity type 'User' is configured with a database-generated default. This default will always be used for inserts when the property has the value 'false', since this is the CLR default for the 'bool' type. Consider using the nullable 'bool?' type instead, so that the default will only be used for inserts when the property value is 'null'.
+2023-08-15 12:14:51.445 +03:00 [WRN] The 'bool' property 'ToasterNotification' on entity type 'User' is configured with a database-generated default. This default will always be used for inserts when the property has the value 'false', since this is the CLR default for the 'bool' type. Consider using the nullable 'bool?' type instead, so that the default will only be used for inserts when the property value is 'null'.
+2023-08-15 12:14:52.793 +03:00 [INF] Executed DbCommand (130ms) [Parameters=[@__email_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM `AspNetUsers` AS `a`
+    WHERE `a`.`Email` = @__email_0)
+2023-08-15 12:14:52.985 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`Id`, `a`.`AccessFailedCount`, `a`.`ConcurrencyStamp`, `a`.`CreatedByUserId`, `a`.`CreatedOn`, `a`.`Email`, `a`.`EmailConfirmed`, `a`.`EmailNotification`, `a`.`FirstName`, `a`.`LastName`, `a`.`LockoutEnabled`, `a`.`LockoutEnd`, `a`.`ModifiedByUserId`, `a`.`ModifiedOn`, `a`.`NormalizedEmail`, `a`.`NormalizedUserName`, `a`.`PasswordHash`, `a`.`PhoneNumber`, `a`.`PhoneNumberConfirmed`, `a`.`SecurityStamp`, `a`.`ToasterNotification`, `a`.`TwoFactorEnabled`, `a`.`UserName`
+FROM `AspNetUsers` AS `a`
+WHERE `a`.`NormalizedEmail` = @__normalizedEmail_0
+LIMIT 2
+2023-08-15 12:14:55.055 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'Application.Common.Models.Errors.ApiErrorDto'.
+2023-08-15 12:14:55.078 +03:00 [INF] Executed action WebApi.Controllers.AuthenticationController.LoginAsync (WebApi) in 9332.545ms
+2023-08-15 12:14:55.086 +03:00 [INF] Executed endpoint 'WebApi.Controllers.AuthenticationController.LoginAsync (WebApi)'
+2023-08-15 12:14:55.101 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7090/api/Authentication/Login application/json;+charset=utf-8 56 - 400 - application/json;+charset=utf-8 10138.4488ms
+2023-08-15 12:15:01.853 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7090/api/Authentication/Login - -
+2023-08-15 12:15:01.888 +03:00 [INF] CORS policy execution successful.
+2023-08-15 12:15:01.891 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7090/api/Authentication/Login - - - 204 - - 38.3802ms
+2023-08-15 12:15:01.894 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7090/api/Authentication/Login application/json;+charset=utf-8 56
+2023-08-15 12:15:01.896 +03:00 [INF] CORS policy execution successful.
+2023-08-15 12:15:01.900 +03:00 [INF] Executing endpoint 'WebApi.Controllers.AuthenticationController.LoginAsync (WebApi)'
+2023-08-15 12:15:01.902 +03:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(Application.Features.Auth.Commands.Login.AuthLoginCommand) on controller WebApi.Controllers.AuthenticationController (WebApi).
+2023-08-15 12:15:01.993 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__email_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM `AspNetUsers` AS `a`
+    WHERE `a`.`Email` = @__email_0)
+2023-08-15 12:15:02.001 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`Id`, `a`.`AccessFailedCount`, `a`.`ConcurrencyStamp`, `a`.`CreatedByUserId`, `a`.`CreatedOn`, `a`.`Email`, `a`.`EmailConfirmed`, `a`.`EmailNotification`, `a`.`FirstName`, `a`.`LastName`, `a`.`LockoutEnabled`, `a`.`LockoutEnd`, `a`.`ModifiedByUserId`, `a`.`ModifiedOn`, `a`.`NormalizedEmail`, `a`.`NormalizedUserName`, `a`.`PasswordHash`, `a`.`PhoneNumber`, `a`.`PhoneNumberConfirmed`, `a`.`SecurityStamp`, `a`.`ToasterNotification`, `a`.`TwoFactorEnabled`, `a`.`UserName`
+FROM `AspNetUsers` AS `a`
+WHERE `a`.`NormalizedEmail` = @__normalizedEmail_0
+LIMIT 2
+2023-08-15 12:15:02.478 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'Application.Common.Models.Errors.ApiErrorDto'.
+2023-08-15 12:15:02.480 +03:00 [INF] Executed action WebApi.Controllers.AuthenticationController.LoginAsync (WebApi) in 575.5551ms
+2023-08-15 12:15:02.483 +03:00 [INF] Executed endpoint 'WebApi.Controllers.AuthenticationController.LoginAsync (WebApi)'
+2023-08-15 12:15:02.485 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7090/api/Authentication/Login application/json;+charset=utf-8 56 - 400 - application/json;+charset=utf-8 591.7533ms
+2023-08-15 12:15:22.023 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7090/api/Authentication/Login - -
+2023-08-15 12:15:22.025 +03:00 [INF] CORS policy execution successful.
+2023-08-15 12:15:22.026 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7090/api/Authentication/Login - - - 204 - - 3.0879ms
+2023-08-15 12:15:22.029 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7090/api/Authentication/Login application/json;+charset=utf-8 56
+2023-08-15 12:15:22.031 +03:00 [INF] CORS policy execution successful.
+2023-08-15 12:15:22.052 +03:00 [INF] Executing endpoint 'WebApi.Controllers.AuthenticationController.LoginAsync (WebApi)'
+2023-08-15 12:15:22.055 +03:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(Application.Features.Auth.Commands.Login.AuthLoginCommand) on controller WebApi.Controllers.AuthenticationController (WebApi).
+2023-08-15 12:15:22.145 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__email_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM `AspNetUsers` AS `a`
+    WHERE `a`.`Email` = @__email_0)
+2023-08-15 12:15:22.154 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`Id`, `a`.`AccessFailedCount`, `a`.`ConcurrencyStamp`, `a`.`CreatedByUserId`, `a`.`CreatedOn`, `a`.`Email`, `a`.`EmailConfirmed`, `a`.`EmailNotification`, `a`.`FirstName`, `a`.`LastName`, `a`.`LockoutEnabled`, `a`.`LockoutEnd`, `a`.`ModifiedByUserId`, `a`.`ModifiedOn`, `a`.`NormalizedEmail`, `a`.`NormalizedUserName`, `a`.`PasswordHash`, `a`.`PhoneNumber`, `a`.`PhoneNumberConfirmed`, `a`.`SecurityStamp`, `a`.`ToasterNotification`, `a`.`TwoFactorEnabled`, `a`.`UserName`
+FROM `AspNetUsers` AS `a`
+WHERE `a`.`NormalizedEmail` = @__normalizedEmail_0
+LIMIT 2
+2023-08-15 12:15:22.475 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'Application.Common.Models.Errors.ApiErrorDto'.
+2023-08-15 12:15:22.478 +03:00 [INF] Executed action WebApi.Controllers.AuthenticationController.LoginAsync (WebApi) in 420.0673ms
+2023-08-15 12:15:22.481 +03:00 [INF] Executed endpoint 'WebApi.Controllers.AuthenticationController.LoginAsync (WebApi)'
+2023-08-15 12:15:22.484 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7090/api/Authentication/Login application/json;+charset=utf-8 56 - 400 - application/json;+charset=utf-8 455.0971ms
+2023-08-15 12:15:27.453 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7090/api/Authentication/Login - -
+2023-08-15 12:15:27.456 +03:00 [INF] CORS policy execution successful.
+2023-08-15 12:15:27.457 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7090/api/Authentication/Login - - - 204 - - 4.3014ms
+2023-08-15 12:15:27.460 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7090/api/Authentication/Login application/json;+charset=utf-8 56
+2023-08-15 12:15:27.463 +03:00 [INF] CORS policy execution successful.
+2023-08-15 12:15:27.464 +03:00 [INF] Executing endpoint 'WebApi.Controllers.AuthenticationController.LoginAsync (WebApi)'
+2023-08-15 12:15:27.465 +03:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(Application.Features.Auth.Commands.Login.AuthLoginCommand) on controller WebApi.Controllers.AuthenticationController (WebApi).
+2023-08-15 12:15:27.474 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__email_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM `AspNetUsers` AS `a`
+    WHERE `a`.`Email` = @__email_0)
+2023-08-15 12:15:27.522 +03:00 [INF] Executed DbCommand (42ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`Id`, `a`.`AccessFailedCount`, `a`.`ConcurrencyStamp`, `a`.`CreatedByUserId`, `a`.`CreatedOn`, `a`.`Email`, `a`.`EmailConfirmed`, `a`.`EmailNotification`, `a`.`FirstName`, `a`.`LastName`, `a`.`LockoutEnabled`, `a`.`LockoutEnd`, `a`.`ModifiedByUserId`, `a`.`ModifiedOn`, `a`.`NormalizedEmail`, `a`.`NormalizedUserName`, `a`.`PasswordHash`, `a`.`PhoneNumber`, `a`.`PhoneNumberConfirmed`, `a`.`SecurityStamp`, `a`.`ToasterNotification`, `a`.`TwoFactorEnabled`, `a`.`UserName`
+FROM `AspNetUsers` AS `a`
+WHERE `a`.`NormalizedEmail` = @__normalizedEmail_0
+LIMIT 2
+2023-08-15 12:15:27.955 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'Application.Common.Models.Errors.ApiErrorDto'.
+2023-08-15 12:15:27.957 +03:00 [INF] Executed action WebApi.Controllers.AuthenticationController.LoginAsync (WebApi) in 488.8881ms
+2023-08-15 12:15:27.959 +03:00 [INF] Executed endpoint 'WebApi.Controllers.AuthenticationController.LoginAsync (WebApi)'
+2023-08-15 12:15:27.961 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7090/api/Authentication/Login application/json;+charset=utf-8 56 - 400 - application/json;+charset=utf-8 501.5119ms
+2023-08-15 12:17:32.412 +03:00 [INF] User profile is available. Using 'C:\Users\DL_ne\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2023-08-15 12:17:32.652 +03:00 [INF] Now listening on: https://localhost:7090
+2023-08-15 12:17:32.654 +03:00 [INF] Now listening on: http://localhost:5070
+2023-08-15 12:17:32.657 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-08-15 12:17:32.659 +03:00 [INF] Hosting environment: Development
+2023-08-15 12:17:32.660 +03:00 [INF] Content root path: C:\Users\DL_ne\OneDrive\Masaüstü\Github\Trendyol-Bot\T-BOT\src\WebApi
+2023-08-15 12:17:35.608 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/swagger/index.html - -
+2023-08-15 12:17:37.658 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/swagger/index.html - - - 200 - text/html;charset=utf-8 2064.0317ms
+2023-08-15 12:17:38.719 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/_framework/aspnetcore-browser-refresh.js - -
+2023-08-15 12:17:38.733 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/_vs/browserLink - -
+2023-08-15 12:17:38.739 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/_framework/aspnetcore-browser-refresh.js - - - 200 12344 application/javascript;+charset=utf-8 19.7063ms
+2023-08-15 12:17:38.765 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 32.0928ms
+2023-08-15 12:17:38.941 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/swagger/v1/swagger.json - -
+2023-08-15 12:17:39.163 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 221.9020ms
+2023-08-15 12:17:45.621 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7090/api/Authentication/Login - -
+2023-08-15 12:17:45.647 +03:00 [INF] CORS policy execution successful.
+2023-08-15 12:17:45.651 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7090/api/Authentication/Login - - - 204 - - 29.1837ms
+2023-08-15 12:17:45.661 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7090/api/Authentication/Login application/json;+charset=utf-8 55
+2023-08-15 12:17:45.669 +03:00 [INF] CORS policy execution successful.
+2023-08-15 12:17:45.774 +03:00 [INF] Executing endpoint 'WebApi.Controllers.AuthenticationController.LoginAsync (WebApi)'
+2023-08-15 12:17:45.798 +03:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(Application.Features.Auth.Commands.Login.AuthLoginCommand) on controller WebApi.Controllers.AuthenticationController (WebApi).
+2023-08-15 12:17:47.050 +03:00 [WRN] The 'bool' property 'EmailNotification' on entity type 'User' is configured with a database-generated default. This default will always be used for inserts when the property has the value 'false', since this is the CLR default for the 'bool' type. Consider using the nullable 'bool?' type instead, so that the default will only be used for inserts when the property value is 'null'.
+2023-08-15 12:17:47.053 +03:00 [WRN] The 'bool' property 'ToasterNotification' on entity type 'User' is configured with a database-generated default. This default will always be used for inserts when the property has the value 'false', since this is the CLR default for the 'bool' type. Consider using the nullable 'bool?' type instead, so that the default will only be used for inserts when the property value is 'null'.
+2023-08-15 12:17:47.595 +03:00 [INF] Executed DbCommand (51ms) [Parameters=[@__email_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM `AspNetUsers` AS `a`
+    WHERE `a`.`Email` = @__email_0)
+2023-08-15 12:17:47.694 +03:00 [INF] Executed DbCommand (5ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`Id`, `a`.`AccessFailedCount`, `a`.`ConcurrencyStamp`, `a`.`CreatedByUserId`, `a`.`CreatedOn`, `a`.`Email`, `a`.`EmailConfirmed`, `a`.`EmailNotification`, `a`.`FirstName`, `a`.`LastName`, `a`.`LockoutEnabled`, `a`.`LockoutEnd`, `a`.`ModifiedByUserId`, `a`.`ModifiedOn`, `a`.`NormalizedEmail`, `a`.`NormalizedUserName`, `a`.`PasswordHash`, `a`.`PhoneNumber`, `a`.`PhoneNumberConfirmed`, `a`.`SecurityStamp`, `a`.`ToasterNotification`, `a`.`TwoFactorEnabled`, `a`.`UserName`
+FROM `AspNetUsers` AS `a`
+WHERE `a`.`NormalizedEmail` = @__normalizedEmail_0
+LIMIT 2
+2023-08-15 12:17:48.818 +03:00 [INF] Executed DbCommand (14ms) [Parameters=[@__user_Id_0='?' (Size = 191)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`Id`, `a`.`ClaimType`, `a`.`ClaimValue`, `a`.`UserId`
+FROM `AspNetUserClaims` AS `a`
+WHERE `a`.`UserId` = @__user_Id_0
+2023-08-15 12:17:48.866 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__userId_0='?' (Size = 191)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a0`.`Name`
+FROM `AspNetUserRoles` AS `a`
+INNER JOIN `AspNetRoles` AS `a0` ON `a`.`RoleId` = `a0`.`Id`
+WHERE `a`.`UserId` = @__userId_0
+2023-08-15 12:17:49.080 +03:00 [INF] AuthenticationScheme: Identity.Application signed in.
+2023-08-15 12:17:49.865 +03:00 [INF] Executing OkObjectResult, writing value of type 'Application.Features.Auth.Commands.Login.AuthLoginDto'.
+2023-08-15 12:17:49.941 +03:00 [INF] Executed action WebApi.Controllers.AuthenticationController.LoginAsync (WebApi) in 4135.7201ms
+2023-08-15 12:17:49.944 +03:00 [INF] Executed endpoint 'WebApi.Controllers.AuthenticationController.LoginAsync (WebApi)'
+2023-08-15 12:17:49.959 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7090/api/Authentication/Login application/json;+charset=utf-8 55 - 200 - application/json;+charset=utf-8 4299.4080ms
+2023-08-15 12:25:56.612 +03:00 [INF] User profile is available. Using 'C:\Users\DL_ne\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2023-08-15 12:25:57.669 +03:00 [INF] Now listening on: https://localhost:7090
+2023-08-15 12:25:57.936 +03:00 [INF] Now listening on: http://localhost:5070
+2023-08-15 12:25:57.951 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-08-15 12:25:57.953 +03:00 [INF] Hosting environment: Development
+2023-08-15 12:25:57.966 +03:00 [INF] Content root path: C:\Users\DL_ne\OneDrive\Masaüstü\Github\Trendyol-Bot\T-BOT\src\WebApi
+2023-08-15 12:26:00.517 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/swagger/index.html - -
+2023-08-15 12:26:03.843 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/swagger/index.html - - - 200 - text/html;charset=utf-8 3328.8919ms
+2023-08-15 12:26:11.121 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/_framework/aspnetcore-browser-refresh.js - -
+2023-08-15 12:26:11.142 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/_framework/aspnetcore-browser-refresh.js - - - 200 12344 application/javascript;+charset=utf-8 20.4598ms
+2023-08-15 12:26:11.192 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/_vs/browserLink - -
+2023-08-15 12:26:11.218 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 25.7611ms
+2023-08-15 12:26:12.094 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/swagger/v1/swagger.json - -
+2023-08-15 12:26:12.518 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 423.6820ms
+2023-08-15 12:26:25.599 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7090/api/Authentication/Login - -
+2023-08-15 12:26:25.652 +03:00 [INF] CORS policy execution successful.
+2023-08-15 12:26:25.655 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7090/api/Authentication/Login - - - 204 - - 56.1906ms
+2023-08-15 12:26:25.657 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7090/api/Authentication/Login application/json;+charset=utf-8 55
+2023-08-15 12:26:25.660 +03:00 [INF] CORS policy execution successful.
+2023-08-15 12:26:26.007 +03:00 [INF] Executing endpoint 'WebApi.Controllers.AuthenticationController.LoginAsync (WebApi)'
+2023-08-15 12:26:26.114 +03:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(Application.Features.Auth.Commands.Login.AuthLoginCommand) on controller WebApi.Controllers.AuthenticationController (WebApi).
+2023-08-15 12:26:28.574 +03:00 [WRN] The 'bool' property 'EmailNotification' on entity type 'User' is configured with a database-generated default. This default will always be used for inserts when the property has the value 'false', since this is the CLR default for the 'bool' type. Consider using the nullable 'bool?' type instead, so that the default will only be used for inserts when the property value is 'null'.
+2023-08-15 12:26:28.578 +03:00 [WRN] The 'bool' property 'ToasterNotification' on entity type 'User' is configured with a database-generated default. This default will always be used for inserts when the property has the value 'false', since this is the CLR default for the 'bool' type. Consider using the nullable 'bool?' type instead, so that the default will only be used for inserts when the property value is 'null'.
+2023-08-15 12:26:29.420 +03:00 [INF] Executed DbCommand (88ms) [Parameters=[@__email_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM `AspNetUsers` AS `a`
+    WHERE `a`.`Email` = @__email_0)
+2023-08-15 12:26:29.558 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`Id`, `a`.`AccessFailedCount`, `a`.`ConcurrencyStamp`, `a`.`CreatedByUserId`, `a`.`CreatedOn`, `a`.`Email`, `a`.`EmailConfirmed`, `a`.`EmailNotification`, `a`.`FirstName`, `a`.`LastName`, `a`.`LockoutEnabled`, `a`.`LockoutEnd`, `a`.`ModifiedByUserId`, `a`.`ModifiedOn`, `a`.`NormalizedEmail`, `a`.`NormalizedUserName`, `a`.`PasswordHash`, `a`.`PhoneNumber`, `a`.`PhoneNumberConfirmed`, `a`.`SecurityStamp`, `a`.`ToasterNotification`, `a`.`TwoFactorEnabled`, `a`.`UserName`
+FROM `AspNetUsers` AS `a`
+WHERE `a`.`NormalizedEmail` = @__normalizedEmail_0
+LIMIT 2
+2023-08-15 12:26:29.992 +03:00 [INF] Executed DbCommand (9ms) [Parameters=[@__user_Id_0='?' (Size = 191)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`Id`, `a`.`ClaimType`, `a`.`ClaimValue`, `a`.`UserId`
+FROM `AspNetUserClaims` AS `a`
+WHERE `a`.`UserId` = @__user_Id_0
+2023-08-15 12:26:30.038 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__userId_0='?' (Size = 191)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a0`.`Name`
+FROM `AspNetUserRoles` AS `a`
+INNER JOIN `AspNetRoles` AS `a0` ON `a`.`RoleId` = `a0`.`Id`
+WHERE `a`.`UserId` = @__userId_0
+2023-08-15 12:26:30.163 +03:00 [INF] AuthenticationScheme: Identity.Application signed in.
+2023-08-15 12:26:30.419 +03:00 [INF] Executing OkObjectResult, writing value of type 'Application.Features.Auth.Commands.Login.AuthLoginDto'.
+2023-08-15 12:26:30.466 +03:00 [INF] Executed action WebApi.Controllers.AuthenticationController.LoginAsync (WebApi) in 4343.7918ms
+2023-08-15 12:26:30.469 +03:00 [INF] Executed endpoint 'WebApi.Controllers.AuthenticationController.LoginAsync (WebApi)'
+2023-08-15 12:26:30.482 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7090/api/Authentication/Login application/json;+charset=utf-8 55 - 200 - application/json;+charset=utf-8 4824.2951ms
+2023-08-15 12:26:41.366 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7090/api/Authentication/Login - -
+2023-08-15 12:26:41.382 +03:00 [INF] CORS policy execution successful.
+2023-08-15 12:26:41.384 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7090/api/Authentication/Login - - - 204 - - 17.9077ms
+2023-08-15 12:26:41.386 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7090/api/Authentication/Login application/json;+charset=utf-8 30
+2023-08-15 12:26:41.388 +03:00 [INF] CORS policy execution successful.
+2023-08-15 12:26:41.391 +03:00 [INF] Executing endpoint 'WebApi.Controllers.AuthenticationController.LoginAsync (WebApi)'
+2023-08-15 12:26:41.393 +03:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(Application.Features.Auth.Commands.Login.AuthLoginCommand) on controller WebApi.Controllers.AuthenticationController (WebApi).
+2023-08-15 12:26:41.679 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT FALSE
+2023-08-15 12:26:42.019 +03:00 [INF] Executing BadRequestObjectResult, writing value of type 'Application.Common.Models.Errors.ApiErrorDto'.
+2023-08-15 12:26:42.025 +03:00 [INF] Executed action WebApi.Controllers.AuthenticationController.LoginAsync (WebApi) in 628.7089ms
+2023-08-15 12:26:42.028 +03:00 [INF] Executed endpoint 'WebApi.Controllers.AuthenticationController.LoginAsync (WebApi)'
+2023-08-15 12:26:42.031 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7090/api/Authentication/Login application/json;+charset=utf-8 30 - 400 - application/json;+charset=utf-8 644.4775ms
+2023-08-15 12:26:51.072 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7090/api/Authentication/Login - -
+2023-08-15 12:26:51.073 +03:00 [INF] CORS policy execution successful.
+2023-08-15 12:26:51.075 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7090/api/Authentication/Login - - - 204 - - 3.0930ms
+2023-08-15 12:26:51.078 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7090/api/Authentication/Login application/json;+charset=utf-8 55
+2023-08-15 12:26:51.080 +03:00 [INF] CORS policy execution successful.
+2023-08-15 12:26:51.096 +03:00 [INF] Executing endpoint 'WebApi.Controllers.AuthenticationController.LoginAsync (WebApi)'
+2023-08-15 12:26:51.098 +03:00 [INF] Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] LoginAsync(Application.Features.Auth.Commands.Login.AuthLoginCommand) on controller WebApi.Controllers.AuthenticationController (WebApi).
+2023-08-15 12:26:51.160 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__email_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM `AspNetUsers` AS `a`
+    WHERE `a`.`Email` = @__email_0)
+2023-08-15 12:26:51.169 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`Id`, `a`.`AccessFailedCount`, `a`.`ConcurrencyStamp`, `a`.`CreatedByUserId`, `a`.`CreatedOn`, `a`.`Email`, `a`.`EmailConfirmed`, `a`.`EmailNotification`, `a`.`FirstName`, `a`.`LastName`, `a`.`LockoutEnabled`, `a`.`LockoutEnd`, `a`.`ModifiedByUserId`, `a`.`ModifiedOn`, `a`.`NormalizedEmail`, `a`.`NormalizedUserName`, `a`.`PasswordHash`, `a`.`PhoneNumber`, `a`.`PhoneNumberConfirmed`, `a`.`SecurityStamp`, `a`.`ToasterNotification`, `a`.`TwoFactorEnabled`, `a`.`UserName`
+FROM `AspNetUsers` AS `a`
+WHERE `a`.`NormalizedEmail` = @__normalizedEmail_0
+LIMIT 2
+2023-08-15 12:26:51.311 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__user_Id_0='?' (Size = 191)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a`.`Id`, `a`.`ClaimType`, `a`.`ClaimValue`, `a`.`UserId`
+FROM `AspNetUserClaims` AS `a`
+WHERE `a`.`UserId` = @__user_Id_0
+2023-08-15 12:26:51.333 +03:00 [INF] Executed DbCommand (14ms) [Parameters=[@__userId_0='?' (Size = 191)], CommandType='"Text"', CommandTimeout='30']
+SELECT `a0`.`Name`
+FROM `AspNetUserRoles` AS `a`
+INNER JOIN `AspNetRoles` AS `a0` ON `a`.`RoleId` = `a0`.`Id`
+WHERE `a`.`UserId` = @__userId_0
+2023-08-15 12:26:51.338 +03:00 [INF] AuthenticationScheme: Identity.Application signed in.
+2023-08-15 12:26:51.340 +03:00 [INF] Executing OkObjectResult, writing value of type 'Application.Features.Auth.Commands.Login.AuthLoginDto'.
+2023-08-15 12:26:51.342 +03:00 [INF] Executed action WebApi.Controllers.AuthenticationController.LoginAsync (WebApi) in 241.8223ms
+2023-08-15 12:26:51.345 +03:00 [INF] Executed endpoint 'WebApi.Controllers.AuthenticationController.LoginAsync (WebApi)'
+2023-08-15 12:26:51.346 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7090/api/Authentication/Login application/json;+charset=utf-8 55 - 200 - application/json;+charset=utf-8 268.3698ms
+2023-08-15 16:30:38.703 +03:00 [INF] User profile is available. Using 'C:\Users\DL_ne\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2023-08-15 16:30:44.273 +03:00 [INF] Now listening on: https://localhost:7090
+2023-08-15 16:30:44.381 +03:00 [INF] Now listening on: http://localhost:5070
+2023-08-15 16:30:44.385 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-08-15 16:30:44.387 +03:00 [INF] Hosting environment: Development
+2023-08-15 16:30:44.389 +03:00 [INF] Content root path: C:\Users\DL_ne\OneDrive\Masaüstü\Github\T-BOT\T-BOT\src\WebApi
+2023-08-15 16:31:15.725 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/swagger/index.html - -
+2023-08-15 16:31:18.938 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/swagger/index.html - - - 200 - text/html;charset=utf-8 3124.8884ms
+2023-08-15 16:31:21.429 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/_framework/aspnetcore-browser-refresh.js - -
+2023-08-15 16:31:21.487 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/_framework/aspnetcore-browser-refresh.js - - - 200 12344 application/javascript;+charset=utf-8 57.5827ms
+2023-08-15 16:31:21.570 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/_vs/browserLink - -
+2023-08-15 16:31:21.627 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 57.0209ms
+2023-08-15 16:31:21.856 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7090/swagger/v1/swagger.json - -
+2023-08-15 16:31:25.049 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7090/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 3193.0350ms
+2023-08-15 16:31:48.453 +03:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7090/Hubs/UserLogHub/negotiate?negotiateVersion=1 - -
+2023-08-15 16:31:48.509 +03:00 [INF] CORS policy execution successful.
+2023-08-15 16:31:48.513 +03:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7090/Hubs/UserLogHub/negotiate?negotiateVersion=1 - - - 204 - - 59.6172ms
+2023-08-15 16:31:48.605 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7090/Hubs/UserLogHub/negotiate?negotiateVersion=1 - 0
+2023-08-15 16:31:48.607 +03:00 [INF] CORS policy execution successful.
