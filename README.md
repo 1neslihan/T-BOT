@@ -1,6 +1,16 @@
 # T-BOT
 Bu geliştirme aşamasındaki bir web scraping projesidir. Google Alışveriş sekmesinden seçilen kategoriye göre ürün bilgileri kazımaktadır.
 </br>
+## Teknolojiler
+.NET7
+</br>
+Blazor WebAssembly
+</br>
+Selenyum
+</br>
+MariaDB
+
+
  ## Hedefler 
 Kullanıcı kategori bilgisini ve istediği ürün miktarını girdikten sonra canlı takiple kazıma ve listeleme işlemi gerçekleştirilecektir.
 </br>
