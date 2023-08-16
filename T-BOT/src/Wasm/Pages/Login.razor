@@ -133,7 +133,6 @@
             var jsonObject = JObject.Parse(jsonResponse);
             var accessToken = jsonObject["accessToken"].ToString();
             var expires = jsonObject["expires"].ToString();
-
             // accessToken ve expires değerlerini ayrı ayrı localStorage'e kaydet
             await JSRuntime.InvokeVoidAsync("localStorage.setItem", "accessToken", accessToken);
             await JSRuntime.InvokeVoidAsync("localStorage.setItem", "expires", expires);

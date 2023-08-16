@@ -1,11 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.Configurations.Application
 {
@@ -25,24 +20,24 @@ namespace Infrastructure.Persistence.Configurations.Application
             builder.Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(150);
-            
+
+            //StoreName
+            builder.Property(x => x.StoreName)
+                .IsRequired()
+                .HasMaxLength(50);
+
 
             //Picture
             builder.Property(x => x.Picture)
                 .IsRequired()
                 .HasMaxLength(500);
 
-            //IsOnSale
-            builder.Property(x => x.IsOnSale).IsRequired();
 
             //Price
             builder.Property(x => x.Price)
                 .HasColumnType("decimal(18, 2)") // Fiyat alanının veritabanındaki sütun tipini belirtme
                 .IsRequired();
 
-            //SalePrice
-            builder.Property(x => x.SalePrice)
-                .HasColumnType("decimal(18, 2)");
 
             //Common Fields
 
@@ -77,7 +72,7 @@ namespace Infrastructure.Persistence.Configurations.Application
             builder.Property(x => x.IsDeleted).HasDefaultValueSql("0");
             builder.HasIndex(x => x.IsDeleted);
 
-            
+
 
             builder.ToTable("Products");
         }

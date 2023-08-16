@@ -25,6 +25,10 @@ namespace Infrastructure.Persistence.Migrations.Application
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("CreatedByUserId")
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
@@ -52,13 +56,7 @@ namespace Infrastructure.Persistence.Migrations.Application
                     b.Property<DateTimeOffset?>("ModifiedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("ProductCrawlType")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RequestedAmount")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TotalFoundAmount")
+                    b.Property<int>("RequestedAmount")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -146,9 +144,6 @@ namespace Infrastructure.Persistence.Migrations.Application
                         .HasColumnType("tinyint(1)")
                         .HasDefaultValueSql("0");
 
-                    b.Property<bool>("IsOnSale")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<string>("ModifiedByUserId")
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
@@ -172,8 +167,10 @@ namespace Infrastructure.Persistence.Migrations.Application
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18, 2)");
 
-                    b.Property<decimal?>("SalePrice")
-                        .HasColumnType("decimal(18, 2)");
+                    b.Property<string>("StoreName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 

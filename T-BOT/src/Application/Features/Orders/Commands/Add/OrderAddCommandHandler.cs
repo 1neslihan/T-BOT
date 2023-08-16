@@ -2,11 +2,6 @@
 using Domain.Common;
 using Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.Orders.Commands.Add
 {
@@ -27,9 +22,8 @@ namespace Application.Features.Orders.Commands.Add
             {
                 Id=request.Id,
                 RequestedAmount=request.RequestedAmount,
-                TotalFoundAmount=request.TotalFoundAmount,
                 UserId=_currentUserService.UserId,
-                ProductCrawlType=request.ProductCrawlType,
+                Category=request.Category,
             };
 
             await _applicationDbContext.Orders.AddAsync(order, cancellationToken);

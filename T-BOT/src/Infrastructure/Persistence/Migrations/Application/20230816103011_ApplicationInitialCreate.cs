@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Persistence.Migrations.Application
 {
     /// <inheritdoc />
-    public partial class Create : Migration
+    public partial class ApplicationInitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,11 +20,11 @@ namespace Infrastructure.Persistence.Migrations.Application
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    RequestedAmount = table.Column<int>(type: "int", nullable: true),
-                    TotalFoundAmount = table.Column<int>(type: "int", nullable: true),
+                    RequestedAmount = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ProductCrawlType = table.Column<int>(type: "int", nullable: false),
+                    Category = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedOn = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CreatedByUserId = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
@@ -82,11 +82,11 @@ namespace Infrastructure.Persistence.Migrations.Application
                     OrderId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Name = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    StoreName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Picture = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    IsOnSale = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    SalePrice = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     CreatedOn = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CreatedByUserId = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)

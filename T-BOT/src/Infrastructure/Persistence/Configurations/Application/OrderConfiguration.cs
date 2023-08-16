@@ -1,13 +1,6 @@
 ﻿using Domain.Entities;
-using Domain.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.Configurations.Application
 {
@@ -17,20 +10,15 @@ namespace Infrastructure.Persistence.Configurations.Application
         {
             //Id
             builder.HasKey(x => x.Id);
-            //builder.Property(x => x.Id).ValueGeneratedOnAdd();
+
 
             //Requested Amount
             builder.Property(x => x.RequestedAmount)
-                .IsRequired(false);
+                .IsRequired();
 
-            //Total Found Amount
-            builder.Property(x=>x.TotalFoundAmount)
-                .IsRequired(false);
-
-            //Product Crawl Type
-            builder.Property(x => x.ProductCrawlType)
-                .IsRequired()
-                .HasConversion<int>();
+            //Categories
+            builder.Property(x => x.Category)
+                .HasConversion<string>();
 
             //Common Fields
 
@@ -59,7 +47,7 @@ namespace Infrastructure.Persistence.Configurations.Application
             builder.Property(x => x.DeletedByUserId)
                 .IsRequired(false)
                 .HasMaxLength(100);
-     
+
             //IsDeleted
             builder.Property(x => x.IsDeleted)
                 .IsRequired()
@@ -80,8 +68,8 @@ namespace Infrastructure.Persistence.Configurations.Application
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade); ;
 
-            builder.HasMany<OrderEvent>(x=>x.OrderEvents)
-                .WithOne(x=>x.Order)
+            builder.HasMany<OrderEvent>(x => x.OrderEvents)
+                .WithOne(x => x.Order)
                 .HasForeignKey(x => x.OrderId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade); ;

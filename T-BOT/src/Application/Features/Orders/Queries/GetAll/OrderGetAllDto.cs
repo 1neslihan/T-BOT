@@ -1,10 +1,10 @@
 ﻿using Domain.Enums;
 
-namespace Application.Features.Orders.Queries.GetAll
+namespace Application.Features.Orders.Queries.GetByDate
 {
-    public class OrderGetByIdDto
+    public class OrderGetAllDto
     {
-        public OrderGetByIdDto(Guid id, int requestedAmount, string userId, Categories category, bool isDeleted, DateTimeOffset orderCreatedOn)
+        public OrderGetAllDto(Guid id, int requestedAmount, string userId, Categories category, bool isDeleted, DateTimeOffset orderCreatedOn)
         {
             Id=id;
             RequestedAmount=requestedAmount;
@@ -22,5 +22,6 @@ namespace Application.Features.Orders.Queries.GetAll
         public DateTimeOffset OrderCreatedOn { get; set; }
 
     }
+
 
 }
