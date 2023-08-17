@@ -1,6 +1,6 @@
 ﻿using Domain.Enums;
 
-namespace Application.Features.Orders.Queries.GetByDate
+namespace Application.Features.Orders.Queries.GetAll
 {
     public class OrderGetAllDto
     {

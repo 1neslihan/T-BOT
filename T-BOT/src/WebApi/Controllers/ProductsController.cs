@@ -1,7 +1,6 @@
 ﻿using Application.Features.Products.Commands.Add;
 using Application.Features.Products.Queries.GetAll;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -15,10 +14,16 @@ namespace WebApi.Controllers
             return Ok(await Mediator.Send(command));
         }
 
-        [HttpGet("Pull")]
-        public async Task<IActionResult> GetByOrderIdAsync(bool isDeleted,Guid orderId,int pageNumber=1,int pageSize=10)
+        [HttpPost("GetAll")]
+        public async Task<IActionResult> GetAllAsync(ProductGetAllQuery query)
         {
-            return Ok(await Mediator.Send(new ProductGetByOrderIdQuery(isDeleted,orderId,pageNumber,pageSize)));
+            return Ok(await Mediator.Send(query));
+        }
+
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetByOrderIdAsync(bool isDeleted, Guid orderId, int pageNumber = 1, int pageSize = 10)
+        {
+            return Ok(await Mediator.Send(new ProductGetByOrderIdQuery(isDeleted, orderId, pageNumber, pageSize)));
         }
 
         //[HttpGet("Pull/{id}")]

@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Features.Orders.Queries.GetByDate
+namespace Application.Features.Orders.Queries.GetAll
 {
     public class OrderGetAllQueryHandler : IRequestHandler<OrderGetAllQuery, List<OrderGetAllDto>>
     {
