@@ -7,6 +7,7 @@
 @using System.Text;
 @using System.Net.Http.Headers;
 @using Newtonsoft.Json.Linq;
+@using System.Threading.Tasks
 @inject NavigationManager navigationManager
 @inject HttpClient httpClient
 @inject IJSRuntime JSRuntime
@@ -30,7 +31,7 @@
                 </span>
                 <h4 class="Lexend-400 pt-2" style="color:#002FBA">@orderCount</h4>
             </div>
-            
+
         </div>
 
     </div>
@@ -45,32 +46,84 @@
                 </span>
                 <h4 class="Lexend-400 pt-2" style="color:#2E00BA">@productCount</h4>
             </div>
-            
-
         </div>
 
     </div>
-    <div class="col-sm-12 col-md-12 col-lg-4 mb-4 mt-4 px-3" style="cursor:pointer" @onclick="goToOrderPage">
+    <div class="col-sm-12 col-md-12 col-lg-4 mb-4 mt-4 px-3" style="cursor:pointer" @onclick="ShowModal">
         <div class="p-3" style="background-color:#8BE2FF; border:solid; border-width:1px; border-color:transparent; border-radius:7px;">
             <div class="text-center">
                 <div>
                     <svg xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" viewBox="0 0 24 24"><path fill="#008CBA" d="M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z" /></svg>
                 </div>
                 <span class="mx-2 align-middle Lexend-400" style="color:#008CBA; font-size:1.5rem">
-                   Add new order
+                    Add new order
                 </span>
                 <h4 class="pt-2 Lexend-400" style="color:transparent">45</h4>
             </div>
-         
-                
-        
-
-
         </div>
-
     </div>
 
 </div>
+<div class="slide-animation"></div>
+
+@* Modal *@
+<div class="full-page-overlay" style="visibility:@hiddenLayer">
+</div>
+
+@if (showModal)
+{
+  
+    <div class="modal d-block slide-animation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="d-inline-block rounded-circle" style="background-color:#8BA8FF">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 256 256"><path fill="#002FBA" d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24Zm0 192a88 88 0 1 1 88-88a88.1 88.1 0 0 1-88 88Zm16-40a8 8 0 0 1-8 8a16 16 0 0 1-16-16v-40a8 8 0 0 1 0-16a16 16 0 0 1 16 16v40a8 8 0 0 1 8 8Zm-32-92a12 12 0 1 1 12 12a12 12 0 0 1-12-12Z" /></svg>
+                    </div>
+                    <span class="modal-title align-middle mx-2 Lexend-400" style="display:inline-block; font-size:1.5rem">Generate Order</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @onclick=CloseModal></button>
+                </div>
+                <div class="modal-body" style="padding-left:2.5rem; padding-right:2.5rem">
+                    <label for="selector" class="pb-2 mx-auto Lexend-400" style="padding-left:1rem">Please select the category you wish</label>
+
+                    <select class="form-select mb-3 Lexend-400" style="margin-left:1rem;" @onchange="OnSelectionChange" name="selector" aria-label=".form-select-lg example">
+                        <option value="0" selected>Kadın Pantolon</option>
+                        <option value="1">Erkek Pantolon</option>
+                        <option value="2">Kadın Gömlek</option>
+                        <option value="3">Erkek Gömlek</option>
+                        <option value="4">Kadın Şort</option>
+                        <option value="5">Erkek Şort</option>
+                        <option value="6">Kadın Etek</option>
+                        <option value="7">Erkek Kravat</option>
+                        <option value="8">Kadın Ceket</option>
+                        <option value="9">Erkek Ceket</option>
+                        <option value="10">Kadın Pijama</option>
+                        <option value="11">Erkek Pijama</option>
+                        <option value="12">Kadın Ayakkabı</option>
+                        <option value="13">Erkek Ayakkabı</option>
+                        <option value="14">Kadın Çanta</option>
+                        <option value="15">Erkek Çanta</option>
+                        <option value="16">Bilgisayar</option>
+                        <option value="17">Telefon</option>
+                        <option value="18">Televizyon</option>
+                        <option value="19">Ağız Bakımı</option>
+                        <option value="20">Vücut Bakımı</option>
+                    </select>
+
+
+                    <label for="requestedNumber" class="pb-2 mx-auto Lexend-400" style="padding-left:1rem">Please type requested number</label>
+                    <input type="number" min=0 @bind="requestedAmount" @oninput="HandleRequestedAmount" name="requestedNumber" class="form-control Lexend-400" id="requestedNumber" style="margin-left:1rem;">
+                    <br>
+                    <p class="Lexend-400" style="padding-left:1rem;">Please chose what type of product are you looking for and enter how much of them you want.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @onclick=CloseModal>Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 
 
@@ -80,6 +133,40 @@
     private int productCount;
     private string token = "";
 
+    //MODAL İÇİN
+    public string selectedOption = "0";
+    public string requestedAmount = "0";
+    private string hiddenLayer = "hidden";
+
+    private void OnSelectionChange(ChangeEventArgs e)
+    {
+        selectedOption = e.Value.ToString();
+        Console.WriteLine(selectedOption);
+    }
+    private void HandleRequestedAmount(ChangeEventArgs e)
+    {
+        requestedAmount = e.Value.ToString();
+        Console.WriteLine(requestedAmount);
+
+
+    }
+
+    private bool showModal = false;
+
+    private async Task ShowModal()
+    {
+        await Task.Delay(250);
+        showModal = true;
+        hiddenLayer = "visible";
+
+    }
+
+    private void CloseModal()
+    {
+        showModal = false;
+        hiddenLayer = "hidden";
+
+    }
 
 
     protected override async Task OnInitializedAsync()
@@ -108,8 +195,6 @@
 
         }
 
-
-
         await base.OnInitializedAsync();
     }
 
@@ -117,7 +202,7 @@
     {
         navigationManager.NavigateTo("/counter");
     }
-    
+
     public async Task<TResponse> SendHttpPostRequest<TRequest, TResponse>(HttpClient httpClient, string url, TRequest payload, string jwtToken)
     {
         var jsonPayload = JsonConvert.SerializeObject(payload);
@@ -145,5 +230,37 @@
         font-family: 'Lexend', sans-serif;
         font-weight: 400;
     }
+
+    .full-page-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(78, 78, 78, 0.8); /* Arka planın yarı saydam rengi */
+        z-index: 999; /* Diğer elementlerden daha üstte görünecek */
+    }
+
+    .modal-header{
+        border-bottom:none!important;
+    }
+
+    .slide-animation {
+    
+    
+        animation: slideDown 0.7s ease-in-out;
+}
+
+@@keyframes slideDown {
+        0% {
+            transform: translateY(-100%);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+
+}
+
 
 </style>
