@@ -60,7 +60,7 @@ namespace WorkerService
             Console.WriteLine("BOT BAŞLADI");
             var orderAddRequest = new OrderAddCommand();
             using var httpClient = new HttpClient();
-            selectedAmount=0;
+            selectedAmount=1;
 
             //Order Oluşturuluyor
 
@@ -303,6 +303,47 @@ namespace WorkerService
 
             IWebElement shoppingTab = driver.FindElement(By.LinkText("Alışveriş"));
             shoppingTab.Click();
+
+            //Öge kazıma-Ürün isimleri
+
+            int index = 1; // Başlangıç indeksi
+            string baseXPath = "/html/body/div[6]/div/div[4]/div[3]/div/div[3]/div[2]/div[2]/div/div";
+            string nameXPath = $"{baseXPath}[{index}]/div[1]/div[2]/span/a/div/h3";
+            string storeNameXPath = $"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/a[1]/div[3]";
+            string priceXPath = $"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/a[1]/div[2]/span/span/span[1]/span";
+            string pictureXPath = $"{baseXPath}[{index}]/div[1]/div[2]/div[1]/div/div/div/a/div/div/img";
+            while (driver.FindElements(By.XPath(nameXPath)).Count > 0)
+            {
+                string productName = driver.FindElement(By.XPath(nameXPath)).Text;
+                string storeName = driver.FindElement(By.XPath(storeNameXPath)).Text;
+                string price = "";
+                Console.WriteLine($"Product Name:{productName}");
+                Console.WriteLine($"Store Name:{storeName}");
+
+                if (driver.FindElements(By.XPath(priceXPath)).Count > 0)
+                {
+                    price=driver.FindElement(By.XPath(priceXPath)).Text;
+                }
+                else
+                {
+                    price=driver.FindElement(By.XPath(priceXPath+"[1]")).Text;
+                }
+                Console.WriteLine($"Product Price:{price}");
+                string picture = driver.FindElement(By.XPath(pictureXPath)).GetAttribute("src");
+                Console.WriteLine($"Product Picture:{picture}");
+                Console.WriteLine("-----------------");
+                Console.WriteLine();
+
+                index++;
+                nameXPath = $"{baseXPath}[{index}]/div[1]/div[2]/span/a/div/h3";
+                storeNameXPath = $"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/a[1]/div[3]";
+                priceXPath=$"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/a[1]/div[2]/span/span/span[1]/span";
+                pictureXPath=$"{baseXPath}[{index}]/div[1]/div[2]/div[1]/div/div/div/a/div/div/img";
+            }
+
+            int totalElements = index - 1; // Son indeks fazla arttığı için düzeltme yap
+            Console.WriteLine($"Toplam öğe sayısı: {totalElements}");
+
 
 
 
