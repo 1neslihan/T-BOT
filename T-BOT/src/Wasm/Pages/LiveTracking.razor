@@ -1,0 +1,118 @@
+﻿@page "/livetracking"
+@inject HttpClient Http
+
+
+<div class="row">
+    <div class="col-lg-6 col-md-12 col-sm-12">
+        <div class="fakeMenu">
+            <div class="text-start w-25 d-inline-block">
+            <span class="fakeButtons fakeClose"></span>
+            <span class="fakeButtons fakeMinimize"></span>
+            <span class="fakeButtons fakeZoom"></span>
+            </div>
+            <div class="d-inline-block w-50 text-center Lexend-400">
+                <h5 class="d-inline-block pt-1">T-BOT Actions</h5>
+            </div>
+        </div>
+        <div class="fakeScreen">
+            <p class="line1">New Order Generated: <span class="inline-line">2023-08-20 - 22:11</span></p>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-12 col-sm-12">
+        <div class="fakeMenu">
+            <div class="text-start w-25 d-inline-block">
+            <span class="fakeButtons fakeClose"></span>
+            <span class="fakeButtons fakeMinimize"></span>
+            <span class="fakeButtons fakeZoom"></span>
+            </div>
+            <div class="d-inline-block w-50 text-center Lexend-400">
+                <h5 class="d-inline-block pt-1">Product Details</h5>
+            </div>
+        </div>
+        <div class="fakeScreen">
+            <p class="line1">Product Name: <span class="inline-line"> Lee Cooper 221 LCM 121066 Düz Erkek Denim Pantolon 31-30 1055621</span></p>
+            <p class="line1">Store Name: <span class="inline-line"> Lee Cooper TR</span></p>
+            <p class="line1">Product Price: <span class="inline-line">449,99 TL </span></p>
+            <p class="line1">Product Picture: <span class="inline-line">https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRrXAjv_ZswSmq5qiNmniSJCoquUQCfsH1XdLXPmS8htLGvdulGfLi70FWrtFe6_xkvhy7SEaZ5DO6ZA-y5wLei_hxECMnFWiQs_ZTq7k7SIVhljBOXxMFrJg&usqp=CAE </span></p>
+            <div style="width: 100%; border-top-style:dotted; border-width:5px; color:white" />
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+@code {
+    
+}
+
+<style>
+    .fakeButtons {
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        border: 1px solid #000;
+        position:relative;
+        top: 1px;
+        left: 6px;
+        background-color: #ff3b47;
+        border-color: #9d252b;
+        display: inline-block;
+    }
+
+    .fakeMinimize {
+        left: 11px;
+        background-color: #ffc100;
+        border-color: #9d802c;
+    }
+
+    .fakeZoom {
+        left: 16px;
+        background-color: #00d742;
+        border-color: #049931;
+    }
+
+    .fakeMenu {
+        /* width: 75%; */
+        box-sizing: border-box;
+        height: 35px;
+        background-color: #bbb;
+        margin: 0 auto;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+    }
+
+    .fakeScreen {
+        background-color: #16213E;
+        box-sizing: border-box;
+        height: 90vh;
+        margin: 0 auto;
+        margin-bottom:15px;
+        padding: 20px;
+        opacity: 0.8;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        overflow:auto;
+    }
+
+    .line1 {
+        position: static;
+        color: #16FF00;
+        text-align: left;
+        font-size: 1.25em;
+        font-family: monospace;
+        overflow: hidden;
+    }
+
+    .inline-line{
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .Lexend-400 {
+        font-family: 'Lexend', sans-serif;
+        font-weight: 400;
+    }
+</style>
