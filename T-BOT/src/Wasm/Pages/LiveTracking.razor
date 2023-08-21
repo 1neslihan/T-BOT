@@ -1,4 +1,6 @@
 ﻿@page "/livetracking"
+@using Application.Common.Models.SignalR;
+@using Microsoft.AspNetCore.SignalR.Client;
 @inject HttpClient Http
 
 
@@ -6,35 +8,45 @@
     <div class="col-lg-6 col-md-12 col-sm-12">
         <div class="fakeMenu">
             <div class="text-start w-25 d-inline-block">
-            <span class="fakeButtons fakeClose"></span>
-            <span class="fakeButtons fakeMinimize"></span>
-            <span class="fakeButtons fakeZoom"></span>
+                <span class="fakeButtons fakeClose"></span>
+                <span class="fakeButtons fakeMinimize"></span>
+                <span class="fakeButtons fakeZoom"></span>
             </div>
             <div class="d-inline-block w-50 text-center Lexend-400">
                 <h5 class="d-inline-block pt-1">T-BOT Actions</h5>
             </div>
         </div>
         <div class="fakeScreen">
-            <p class="line1">New Order Generated: <span class="inline-line">2023-08-20 - 22:11</span></p>
+            @foreach (var log in logs)
+            {
+                <p class="line1">@log.Message <span class="inline-line">@log.SendOn.ToString("g")</span></p>
+            }
+
         </div>
     </div>
     <div class="col-lg-6 col-md-12 col-sm-12">
         <div class="fakeMenu">
             <div class="text-start w-25 d-inline-block">
-            <span class="fakeButtons fakeClose"></span>
-            <span class="fakeButtons fakeMinimize"></span>
-            <span class="fakeButtons fakeZoom"></span>
+                <span class="fakeButtons fakeClose"></span>
+                <span class="fakeButtons fakeMinimize"></span>
+                <span class="fakeButtons fakeZoom"></span>
             </div>
             <div class="d-inline-block w-50 text-center Lexend-400">
                 <h5 class="d-inline-block pt-1">Product Details</h5>
             </div>
         </div>
         <div class="fakeScreen">
-            <p class="line1">Product Name: <span class="inline-line"> Lee Cooper 221 LCM 121066 Düz Erkek Denim Pantolon 31-30 1055621</span></p>
-            <p class="line1">Store Name: <span class="inline-line"> Lee Cooper TR</span></p>
-            <p class="line1">Product Price: <span class="inline-line">449,99 TL </span></p>
-            <p class="line1">Product Picture: <span class="inline-line">https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRrXAjv_ZswSmq5qiNmniSJCoquUQCfsH1XdLXPmS8htLGvdulGfLi70FWrtFe6_xkvhy7SEaZ5DO6ZA-y5wLei_hxECMnFWiQs_ZTq7k7SIVhljBOXxMFrJg&usqp=CAE </span></p>
-            <div style="width: 100%; border-top-style:dotted; border-width:5px; color:white" />
+            @foreach(var detail in details)
+            {
+                
+                <p class="line2">Product Name:<span class="inline-line">@detail.product_Name</span></p>
+                <p class="line2">Store Name:<span class="inline-line">@detail.product_StoreName</span></p>
+                <p class="line2">Product Price:<span class="inline-line">@detail.product_Price</span></p>
+                <hr style="color:#16FF00" />
+                 
+                
+            }
+            
         </div>
 
     </div>
@@ -45,7 +57,36 @@
 
 
 @code {
-    
+
+    private List<UserLogDto> logs = new List<UserLogDto>();
+    private List<FormattedLogDto> details = new List<FormattedLogDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var userLogHub = new HubConnectionBuilder()
+       .WithUrl($"https://localhost:7090/Hubs/UserLogHub")
+       .WithAutomaticReconnect()
+       .Build();
+        Console.WriteLine("Hub started");
+        userLogHub.On<UserLogDto>("NewUserLogAdded", (UserLogDto) =>
+         {
+             logs.Add(UserLogDto);
+
+             InvokeAsync(StateHasChanged);
+         });
+
+        userLogHub.On<FormattedLogDto>("OrderDetailsAdded", (FormattedLogDto) =>
+     {
+         details.Add(FormattedLogDto);
+
+         InvokeAsync(StateHasChanged);
+     });
+
+        await userLogHub.StartAsync();
+
+        await base.OnInitializedAsync();
+    }
+
 }
 
 <style>
@@ -54,7 +95,7 @@
         width: 10px;
         border-radius: 50%;
         border: 1px solid #000;
-        position:relative;
+        position: relative;
         top: 1px;
         left: 6px;
         background-color: #ff3b47;
@@ -88,27 +129,39 @@
         background-color: #16213E;
         box-sizing: border-box;
         height: 90vh;
+/*         width:100%; */
         margin: 0 auto;
-        margin-bottom:15px;
+        margin-bottom: 15px;
         padding: 20px;
         opacity: 0.8;
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
-        overflow:auto;
+        overflow-y: auto;
+        overflow-x:clip;
     }
 
     .line1 {
-        position: static;
+        /* position: static; */
+        color: #FFFF00;
+        text-align: left;
+        font-size: 1.25em;
+        font-family: monospace;
+        /* overflow: hidden; */
+    }
+
+    .line2 {
+        /* position: static; */
         color: #16FF00;
         text-align: left;
         font-size: 1.25em;
         font-family: monospace;
-        overflow: hidden;
+        /* overflow: hidden; */
     }
 
-    .inline-line{
+    .inline-line {
         color: #fff;
         font-weight: bold;
+        overflow:hidden;
     }
 
     .Lexend-400 {

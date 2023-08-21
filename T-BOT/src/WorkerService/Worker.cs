@@ -1,5 +1,7 @@
 ﻿using Application.Common.Models.SignalR;
+using Application.Features.OrderEvents.Commands.Add;
 using Application.Features.Orders.Commands.Add;
+using Application.Features.Products.Commands.Add;
 using Domain.Enums;
 using Microsoft.AspNetCore.SignalR.Client;
 using Newtonsoft.Json;
@@ -19,33 +21,33 @@ namespace WorkerService
 
         int customAmount;
         int selectedAmount;
-        int requestedAmount;
+        int scraperCounter = 1;
         string token;
 
         public Worker(ILogger<Worker> logger)
         {
             _logger = logger;
 
-            //_DataTransferHubConnection = new HubConnectionBuilder()
-            //    .WithUrl(_dataTransferHub)
-            //    .WithAutomaticReconnect()
-            //    .Build();
+            _DataTransferHubConnection = new HubConnectionBuilder()
+                .WithUrl(_dataTransferHub)
+                .WithAutomaticReconnect()
+                .Build();
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            //    // SignalR mesajlarýný bekleyin
-            //    _DataTransferHubConnection.On<int, int, string>("ReceiveDataFromBlazor", (customAmount, selectedOption, token) =>
-            //    {
-            //        this.customAmount=customAmount;
-            //        selectedAmount=selectedOption;
-            //        this.token= token;
-            //        TBOT();
+            // SignalR mesajlarini bekleyin
+            _DataTransferHubConnection.On<int, int, string>("ReceiveDataFromBlazor", (customAmount, selectedOption, token) =>
+            {
+                this.customAmount=customAmount;
+                selectedAmount=selectedOption;
+                this.token= token;
+                TBOT();
 
-            //    });
+            });
 
-            //    await _DataTransferHubConnection.StartAsync(stoppingToken);
-            TBOT();
+            await _DataTransferHubConnection.StartAsync(stoppingToken);
+
 
             while (!stoppingToken.IsCancellationRequested)
             {
@@ -58,9 +60,11 @@ namespace WorkerService
         {
             //Veri Geldi
             Console.WriteLine("BOT BAŞLADI");
+            Console.WriteLine(token);
             var orderAddRequest = new OrderAddCommand();
+            var orderEventAddRequest = new OrderEventAddCommand();
             using var httpClient = new HttpClient();
-            selectedAmount=1;
+            //selectedAmount=1;
 
             //Order Oluşturuluyor
 
@@ -276,26 +280,28 @@ namespace WorkerService
             }
 
 
-            //var orderAddResponse = await SendHttpPostRequest<OrderAddCommand, object>(httpClient, "https://localhost:7090/api/Orders/Add", orderAddRequest, token);
-            //Guid orderId = orderAddRequest.Id;
-            //await SendLogNotification("New order generated");
+            var orderAddResponse = await SendHttpPostRequest<OrderAddCommand, object>(httpClient, "https://localhost:7090/api/Orders/Add", orderAddRequest, token);
+            Guid orderId = orderAddRequest.Id;
+            Console.Clear();
+            await SendLogNotification("New order generated");
 
             Console.WriteLine("Chrome başlatılıyor");
             IWebDriver driver = new ChromeDriver();
-            Console.Clear();
 
-            //Order event bot started oluþturulup signalR'a mesaj olarak geçildi.
-            //var orderEventAddRequest = new OrderEventAddCommand()
-            //{
-            //    OrderId= orderId,
-            //    Status=OrderStatus.BotStarted,
-            //};
 
-            //var orderEventAddResponse = await SendHttpPostRequest<OrderEventAddCommand, object>(httpClient, "https://localhost:7090/api/OrderEvents/Add", orderEventAddRequest, token);
+            //Order event bot started olusturulup signalR'a mesaj olarak geçildi.
+            orderEventAddRequest = new OrderEventAddCommand()
+            {
+                OrderId= orderId,
+                Status=OrderStatus.BotStarted,
+            };
+
+            var orderEventAddResponse = await SendHttpPostRequest<OrderEventAddCommand, object>(httpClient, "https://localhost:7090/api/OrderEvents/Add", orderEventAddRequest, token);
 
             //SignalR ile verileri hub'a gönderme
-            //await SendLogNotification(orderEventAddRequest.Status.ToString());
+            await SendLogNotification(orderEventAddRequest.Status.ToString());
 
+            await SendLogNotification("Navigating to Google");
             driver.Navigate().GoToUrl("https://www.google.com.tr/?hl=tr");
             IWebElement searchBox = driver.FindElement(By.Name("q")); // Arama kutusunu bul
             searchBox.SendKeys(orderAddRequest.Category.ToString()); // Arama kutusuna kelimeyi yaz
@@ -304,7 +310,16 @@ namespace WorkerService
             IWebElement shoppingTab = driver.FindElement(By.LinkText("Alışveriş"));
             shoppingTab.Click();
 
+
             //Öge kazıma-Ürün isimleri
+            orderEventAddRequest = new OrderEventAddCommand()
+            {
+                OrderId= orderId,
+                Status=OrderStatus.CrawlingStarted,
+            };
+
+            orderEventAddResponse = await SendHttpPostRequest<OrderEventAddCommand, object>(httpClient, "https://localhost:7090/api/OrderEvents/Add", orderEventAddRequest, token);
+            await SendLogNotification(orderEventAddRequest.Status.ToString());
 
             int index = 1; // Başlangıç indeksi
             string baseXPath = "/html/body/div[6]/div/div[4]/div[3]/div/div[3]/div[2]/div[2]/div/div";
@@ -312,39 +327,101 @@ namespace WorkerService
             string storeNameXPath = $"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/a[1]/div[3]";
             string priceXPath = $"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/a[1]/div[2]/span/span/span[1]/span";
             string pictureXPath = $"{baseXPath}[{index}]/div[1]/div[2]/div[1]/div/div/div/a/div/div/img";
-            while (driver.FindElements(By.XPath(nameXPath)).Count > 0)
+
+            if (customAmount > 0)
             {
-                string productName = driver.FindElement(By.XPath(nameXPath)).Text;
-                string storeName = driver.FindElement(By.XPath(storeNameXPath)).Text;
-                string price = "";
-                Console.WriteLine($"Product Name:{productName}");
-                Console.WriteLine($"Store Name:{storeName}");
-
-                if (driver.FindElements(By.XPath(priceXPath)).Count > 0)
+                while (driver.FindElements(By.XPath(nameXPath)).Count > 0)
                 {
-                    price=driver.FindElement(By.XPath(priceXPath)).Text;
-                }
-                else
-                {
-                    price=driver.FindElement(By.XPath(priceXPath+"[1]")).Text;
-                }
-                Console.WriteLine($"Product Price:{price}");
-                string picture = driver.FindElement(By.XPath(pictureXPath)).GetAttribute("src");
-                Console.WriteLine($"Product Picture:{picture}");
-                Console.WriteLine("-----------------");
-                Console.WriteLine();
+                    string productName = driver.FindElement(By.XPath(nameXPath)).Text;
+                    string storeName = driver.FindElement(By.XPath(storeNameXPath)).Text;
+                    string price = "";
+                    Console.WriteLine($"Product Name:{productName}");
+                    Console.WriteLine($"Store Name:{storeName}");
 
-                index++;
-                nameXPath = $"{baseXPath}[{index}]/div[1]/div[2]/span/a/div/h3";
-                storeNameXPath = $"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/a[1]/div[3]";
-                priceXPath=$"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/a[1]/div[2]/span/span/span[1]/span";
-                pictureXPath=$"{baseXPath}[{index}]/div[1]/div[2]/div[1]/div/div/div/a/div/div/img";
+                    if (driver.FindElements(By.XPath(priceXPath)).Count > 0)
+                    {
+                        price=driver.FindElement(By.XPath(priceXPath)).Text;
+                    }
+                    else
+                    {
+                        price=driver.FindElement(By.XPath(priceXPath+"[1]")).Text;
+                    }
+                    Console.WriteLine($"Product Price:{price}");
+                    string picture = driver.FindElement(By.XPath(pictureXPath)).GetAttribute("src");
+                    Console.WriteLine($"Product Picture:{picture}");
+                    Console.WriteLine("-----------------");
+                    Console.WriteLine();
+
+                    index++;
+                    nameXPath = $"{baseXPath}[{index}]/div[1]/div[2]/span/a/div/h3";
+                    storeNameXPath = $"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/a[1]/div[3]";
+                    priceXPath=$"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/a[1]/div[2]/span/span/span[1]/span";
+                    pictureXPath=$"{baseXPath}[{index}]/div[1]/div[2]/div[1]/div/div/div/a/div/div/img";
+
+                    formattedLogDto.product_Name= productName;
+                    formattedLogDto.product_StoreName= storeName;
+                    formattedLogDto.product_Price= price;
+                    formattedLogDto.product_imageURL= picture;
+
+                    var productAddRequest = new ProductAddCommand()
+                    {
+
+                        OrderId =orderAddRequest.Id,
+                        Name = productName,
+                        StoreName = storeName,
+                        Price= decimal.Parse(price.Remove(0, 1)),
+                        Picture= picture,
+
+                    };
+
+                    var productAddResponse = await SendHttpPostRequest<ProductAddCommand, object>(httpClient, "https://localhost:7090/api/Products/Add", productAddRequest, token);
+
+                    await SendDetails(formattedLogDto);
+
+                    if (scraperCounter==customAmount)
+                        break;
+                    else { scraperCounter++; }
+
+                }
+
+            }
+            else
+            {
+                orderEventAddRequest = new OrderEventAddCommand()
+                {
+                    OrderId= orderId,
+                    Status=OrderStatus.CrawlingFailed,
+                };
+
+                orderEventAddResponse = await SendHttpPostRequest<OrderEventAddCommand, object>(httpClient, "https://localhost:7090/api/OrderEvents/Add", orderEventAddRequest, token);
+                await SendLogNotification(orderEventAddRequest.Status.ToString());
+                driver.Dispose();
             }
 
-            int totalElements = index - 1; // Son indeks fazla arttığı için düzeltme yap
-            Console.WriteLine($"Toplam öğe sayısı: {totalElements}");
+            //int totalElements = index - 1; // Son indeks fazla arttığı için düzeltme yap
+            //Console.WriteLine($"Toplam öğe sayısı: {totalElements}");
+            driver.Dispose();
+            scraperCounter=1;
+
+            orderEventAddRequest = new OrderEventAddCommand()
+            {
+                OrderId= orderId,
+                Status=OrderStatus.CrawlingCompleted,
+            };
+
+            orderEventAddResponse = await SendHttpPostRequest<OrderEventAddCommand, object>(httpClient, "https://localhost:7090/api/OrderEvents/Add", orderEventAddRequest, token);
+            await SendLogNotification(orderEventAddRequest.Status.ToString());
 
 
+            orderEventAddRequest = new OrderEventAddCommand()
+            {
+                OrderId= orderId,
+                Status=OrderStatus.OrderCompleted,
+            };
+
+            orderEventAddResponse = await SendHttpPostRequest<OrderEventAddCommand, object>(httpClient, "https://localhost:7090/api/OrderEvents/Add", orderEventAddRequest, token);
+            await SendLogNotification(orderEventAddRequest.Status.ToString());
+            driver.Dispose();
 
 
 
@@ -355,7 +432,7 @@ namespace WorkerService
             var jsonPayload = JsonConvert.SerializeObject(payload);
             var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
-            // Authorization baþlýðýný ayarla
+            // Authorization baglantisini ayarla
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
 
 
@@ -373,23 +450,23 @@ namespace WorkerService
 
         async Task SendLogNotification(string logMessage)
         {
-            // 'CreateLog' metodu burada kullanýlarak bir günlük oluþturulabilir
+
             var log = CreateLog(logMessage);
 
-            // HubConnection oluþturulmalý ve baþlatýlmalý
+
             var hubConnection = new HubConnectionBuilder()
-                .WithUrl("https://localhost:7090/Hubs/UserLogHub") // Hub URL'sini burada belirtmelisiniz
+                .WithUrl("https://localhost:7090/Hubs/UserLogHub")
                 .WithAutomaticReconnect()
                 .Build();
 
             try
             {
-                await hubConnection.StartAsync(); // HubConnection'ý baþlatma
-                await hubConnection.InvokeAsync("SendLogNotificationAsync", log); // Metodu çaðýrma
+                await hubConnection.StartAsync();
+                await hubConnection.InvokeAsync("SendLogNotificationAsync", log);
             }
             finally
             {
-                await hubConnection.DisposeAsync(); // HubConnection'ý kapatma ve kaynaklarý temizleme
+                await hubConnection.DisposeAsync();
             }
         }
 
@@ -402,12 +479,12 @@ namespace WorkerService
 
             try
             {
-                await hubConnection.StartAsync(); // HubConnection'ý baþlatma
-                await hubConnection.InvokeAsync("OrderDetailsAsync", details); // Metodu çaðýrma
+                await hubConnection.StartAsync();
+                await hubConnection.InvokeAsync("OrderDetailsAsync", details);
             }
             finally
             {
-                await hubConnection.DisposeAsync(); // HubConnection'ý kapatma ve kaynaklarý temizleme
+                await hubConnection.DisposeAsync();
             }
         }
     }
