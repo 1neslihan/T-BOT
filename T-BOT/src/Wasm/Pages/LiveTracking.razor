@@ -42,6 +42,8 @@
                 <p class="line2">Product Name:<span class="inline-line">@detail.product_Name</span></p>
                 <p class="line2">Store Name:<span class="inline-line">@detail.product_StoreName</span></p>
                 <p class="line2">Product Price:<span class="inline-line">@detail.product_Price</span></p>
+                <p class="line2">Image URL:<span class="inline-line" style="word-wrap:break-word;">@detail.product_imageURL</span></p>
+                
                 <hr style="color:#16FF00" />
                  
                 
@@ -137,7 +139,7 @@
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
         overflow-y: auto;
-        overflow-x:clip;
+        overflow-wrap:anywhere;
     }
 
     .line1 {
