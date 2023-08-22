@@ -1,6 +1,6 @@
 ﻿using Application.Features.Orders.Commands.Add;
-using Application.Features.Orders.Commands.Delete;
 using Application.Features.Orders.Commands.HardDelete;
+using Application.Features.Orders.Commands.SoftDelete;
 using Application.Features.Orders.Commands.UndoDelete;
 using Application.Features.Orders.Queries.GetAll;
 using Microsoft.AspNetCore.Authorization;

@@ -2,15 +2,10 @@
 using Domain.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.Features.Orders.Commands.Delete
+namespace Application.Features.Orders.Commands.SoftDelete
 {
-    
+
     public class OrderSoftDeleteCommandHandler : IRequestHandler<OrderSoftDeleteCommand, Response<Guid>>
     {
         private readonly IApplicationDbContext _applicationDbContext;
@@ -22,12 +17,12 @@ namespace Application.Features.Orders.Commands.Delete
 
         public async Task<Response<Guid>> Handle(OrderSoftDeleteCommand request, CancellationToken cancellationToken)
         {
-            var dbQuery= _applicationDbContext.Orders.AsQueryable();
+            var dbQuery = _applicationDbContext.Orders.AsQueryable();
 
-            var order= await dbQuery
-                .Include(x=>x.Products)
-                .Include(x=>x.OrderEvents)
-                .Where(x=>x.Id == request.Id).FirstOrDefaultAsync();
+            var order = await dbQuery
+                .Include(x => x.Products)
+                .Include(x => x.OrderEvents)
+                .Where(x => x.Id == request.Id).FirstOrDefaultAsync();
 
             if (order != null)
             {
@@ -36,7 +31,7 @@ namespace Application.Features.Orders.Commands.Delete
                 order.ModifiedOn=DateTime.Now;
                 //order.DeletedByUserId=request.Id.ToString();
 
-                if(order.Products != null)
+                if (order.Products != null)
                 {
                     foreach (var product in order.Products)
                     {
@@ -47,7 +42,7 @@ namespace Application.Features.Orders.Commands.Delete
                     }
                 }
 
-                if(order.OrderEvents != null)
+                if (order.OrderEvents != null)
                 {
                     foreach (var orderEvent in order.OrderEvents)
                     {

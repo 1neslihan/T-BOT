@@ -1,4 +1,8 @@
 ﻿@page "/"
+@using Application.Common.Models.General;
+@using Application.Features.Orders.Commands.HardDelete;
+@using Application.Features.Orders.Commands.SoftDelete;
+@using Application.Features.Orders.Commands.UndoDelete;
 @using Application.Features.Orders.Queries.GetAll;
 @using Application.Features.Products.Queries.GetAll;
 @using Domain.Common;
@@ -65,6 +69,117 @@
     </div>
 
 </div>
+<div class="row mt-5 mb-5 mx-0 border rounded" style="background-color:white; border-color:#C3C4C6">
+    <div class="col-12 Lexend-400 table-overflow">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th scope="col"><span class="oi oi-inbox p-1"></span>Order Id</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Deleted</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var (detail, index) in Details.Select((item, index) => (item, Details.Count-index)))
+                {
+                    <tr>
+                        <td>@index</td>
+                        <td>@detail.Id</td>
+                        <td>@detail.Category</td>
+                        <td>@detail.RequestedAmount</td>
+                        <td>
+                            @if (detail.IsDeleted)
+                            {
+                                <span class="badge bg-danger">Deleted</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">Not Deleted</span>
+                            }
+                        </td>
+                        <td>
+                            @if (detail.IsDeleted)
+                            {
+                                <span class="oi oi-trash" @onclick="()=>ToggleHardDelete(detail.Id)"></span>
+                            }
+                            else
+                            {
+                                <span class="oi oi-delete" @onclick="()=>ToggleSoftDelete(detail.Id)"></span>
+                            }
+                        </td>
+                        <td>
+                            @if (detail.IsDeleted)
+                            {
+                                <span class="oi oi-loop-circular" @onclick="()=>ToggleUndoDelete(detail.Id)"></span>
+                            }
+                            else
+                            {
+                                <span class="oi oi-file"></span>
+                            }
+                        </td>
+                        <td><span class="oi oi-chevron-bottom" @onclick="()=>ToggleAccordion(detail.Id.ToString())"></span></td>
+
+                    </tr>
+
+                <td colspan="7">
+                    <div class="collapse @(detail.Id.ToString() == activeAccordionId ? "show" : "")">
+                        <div class="card-body w-100">
+
+                                @if (isLoading)
+                                {
+                                <p>API bekleniyor...</p>
+                                }
+                                else
+                                {
+                                <div class="row">
+                                        @foreach (var item in products)
+                                        {
+
+                                        <div class="col-sm-12 col-md-4 mt-3">
+                                            <div class="card">
+                                                <img src=@item.Picture class="card-img-top mx-auto" alt=@item.Picture style="height:15rem; width:8rem;">
+                                                <div class="card-body">
+                                                    <p class="card-title">@item.Name</p>
+                                                    <p class="card-text">@item.StoreName</p>
+                                                    <p class="card-text">@item.Price ₺</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        }
+                                        @if (totalPages>1 && currentPage<=totalPages)
+                                        {
+                                        <div class="d-grid gap-2 mt-4 mb-4">
+                                            <button type="button" class="btn navyBlue fw-bold" style="border:solid; border-color:#001C30;" @onclick="()=>showMore(currentPage, detail.Id.ToString())">
+                                                Show More
+                                            </button>
+                                        </div>
+
+                                        }
+
+
+                                </div>
+                                }
+                        </div>
+                    </div>
+
+                </td>
+
+
+
+
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
 <div class="slide-animation"></div>
 
 @* Modal *@
@@ -73,7 +188,7 @@
 
 @if (showModal)
 {
-  
+
     <div class="modal d-block slide-animation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -132,9 +247,11 @@
     private const string BASE_URL = "https://localhost:7090/api";
     private int orderCount;
     private int productCount;
+    private List<OrderGetAllDto> Details = new List<OrderGetAllDto>();
+    private List<ProductGetByOrderIdDto> products = new List<ProductGetByOrderIdDto>();
     private string token = "";
 
-    //MODAL İÇİN
+    //for Modal
     public string selectedOption = "0";
     public string requestedAmount = "0";
     private string hiddenLayer = "hidden";
@@ -142,7 +259,7 @@
     private void OnSelectionChange(ChangeEventArgs e)
     {
         selectedOption = e.Value.ToString();
-     
+
     }
     private void HandleRequestedAmount(ChangeEventArgs e)
     {
@@ -178,27 +295,136 @@
 
         await dataTransferHubConnection.StartAsync();
 
-        await dataTransferHubConnection.InvokeAsync("SendDataToConsole",Convert.ToInt32(requestedAmount), Convert.ToInt32(selectedOption),token);
+        await dataTransferHubConnection.InvokeAsync("SendDataToConsole", Convert.ToInt32(requestedAmount), Convert.ToInt32(selectedOption), token);
         navigationManager.NavigateTo("/livetracking");
     }
 
-
-    protected override async Task OnInitializedAsync()
+    private async Task ToggleSoftDelete(Guid id)
     {
-        token = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "accessToken");
-       
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        var orderGetAllQueryRequest = new OrderGetAllQuery(null);
+        var orderSoftDeleteCommandRequest = new OrderSoftDeleteCommand { Id=id };
 
-        var orderGetAllQueryResponse = await SendHttpPostRequest<OrderGetAllQuery, object>(httpClient, $"{BASE_URL}/Orders/GetAll", orderGetAllQueryRequest, token);
 
-        if (orderGetAllQueryResponse is JArray responseOrderArray)
+        var orderSoftDeleteCommandResponse = await httpClient.PutAsJsonAsync($"{BASE_URL}/Orders/SoftDelete", orderSoftDeleteCommandRequest);
+
+        var content = await orderSoftDeleteCommandResponse.Content.ReadAsStringAsync();
+        Console.WriteLine(content);
+
+        var updatedDetail = Details.FirstOrDefault(detail => detail.Id == id);
+        if (updatedDetail != null)
         {
-            // Yanıt bir dizi içeriyor
-            orderCount = responseOrderArray.Count;
-
+            updatedDetail.IsDeleted = true;
+            StateHasChanged();
         }
 
+    }
+
+    private async Task ToggleUndoDelete(Guid id)
+    {
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var orderUndoDeleteCommandRequest = new OrderUndoDeleteCommand { Id=id };
+
+
+        var orderUndoDeleteCommandResponse = await httpClient.PutAsJsonAsync($"{BASE_URL}/Orders/UndoDelete", orderUndoDeleteCommandRequest);
+
+        var content = await orderUndoDeleteCommandResponse.Content.ReadAsStringAsync();
+        Console.WriteLine(content);
+
+        var updatedDetail = Details.FirstOrDefault(detail => detail.Id == id);
+        if (updatedDetail != null)
+        {
+            updatedDetail.IsDeleted = false;
+            StateHasChanged();
+        }
+
+    }
+
+    private async Task ToggleHardDelete(Guid id)
+    {
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var orderHardDeleteCommandRequest = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri($"{BASE_URL}/Orders/HardDelete"),
+                Content = new StringContent(JsonConvert.SerializeObject(new OrderHardDeleteCommand { Id = id }), Encoding.UTF8, "application/json")
+            };
+
+        var orderHardDeleteCommandResponse = await httpClient.SendAsync(orderHardDeleteCommandRequest);
+
+        var removeDetail = Details.FirstOrDefault(detail => detail.Id == id);
+        if (removeDetail != null)
+        {
+            Details.Remove(removeDetail);
+            StateHasChanged();
+        }
+        await ProductCount();
+        orderCount = Details.Count;
+    }
+
+    //for Accordion
+    private string activeAccordionId = "-1";
+    private bool isLoading = false;
+    private bool HasNextPage = false;
+    private int totalPages = 1;
+    private int currentPage = 2;
+
+    private async Task ToggleAccordion(string id)
+    {
+        if (activeAccordionId == id)
+        {
+            activeAccordionId = "-1";
+
+        }
+        else
+        {
+            isLoading = true;
+            activeAccordionId = id;
+
+            try
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var productGetByOrderIdResponse = await httpClient.GetAsync($"{BASE_URL}/Products/GetById?orderId={id}&pageNumber=1&pageSize=15");
+                var content = await productGetByOrderIdResponse.Content.ReadAsStringAsync();
+                var jsonContent = JsonConvert.DeserializeObject<PaginatedList<ProductGetByOrderIdDto>>(content);
+                products = jsonContent.Items.ToList();
+                var jsonObject = JObject.Parse(content);
+                totalPages = Convert.ToInt32(jsonObject["totalPages"]);
+                currentPage = 2;
+
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                isLoading = false;
+                StateHasChanged();
+            }
+
+
+
+
+        }
+    }
+    private async Task showMore(int currentStage, string id)
+    {
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        var productGetByOrderIdResponse = await httpClient.GetAsync($"{BASE_URL}/Products/GetById?orderId={id}&pageNumber={currentStage}&pageSize=15");
+        var content = await productGetByOrderIdResponse.Content.ReadAsStringAsync();
+        var jsonContent = JsonConvert.DeserializeObject<PaginatedList<ProductGetByOrderIdDto>>(content);
+        var newProducts = jsonContent.Items.ToList();
+        products.AddRange(newProducts); // Mevcut ürün listesine ekle
+        currentPage++;
+        StateHasChanged();
+    }
+
+    private async Task ProductCount()
+    {
         var productGetAllQueryRequest = new ProductGetAllQuery(null);
 
         var productGetAllQueryResponse = await SendHttpPostRequest<ProductGetAllQuery, object>(httpClient, $"{BASE_URL}/Products/GetAll", productGetAllQueryRequest, token);
@@ -209,14 +435,36 @@
             productCount = responseProductArray.Count;
 
         }
+    }
 
+    private async Task OrderCount()
+    {
+        var orderGetAllQueryRequest = new OrderGetAllQuery(null);
+
+        var orderGetAllQueryResponse = await SendHttpPostRequest<OrderGetAllQuery, object>(httpClient, $"{BASE_URL}/Orders/GetAll", orderGetAllQueryRequest, token);
+
+        if (orderGetAllQueryResponse is JArray responseOrderArray)
+        {
+            // Yanıt bir dizi içeriyor
+            orderCount = responseOrderArray.Count;
+            foreach (var item in responseOrderArray)
+            {
+                Details.Add(item.ToObject<OrderGetAllDto>());
+
+            }
+
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        token = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "accessToken");
+        await ProductCount();
+        await OrderCount();
         await base.OnInitializedAsync();
     }
 
-    private void goToOrderPage()
-    {
-        navigationManager.NavigateTo("/counter");
-    }
+
 
     public async Task<TResponse> SendHttpPostRequest<TRequest, TResponse>(HttpClient httpClient, string url, TRequest payload, string jwtToken)
     {
@@ -241,6 +489,32 @@
 @*<SurveyPrompt Title="How is Blazor working for you?" />*@
 <style>
 
+    .card {
+        height: 75vh;
+        overflow-y: auto;
+    }
+
+    @@media (max-width: 576px) {
+        /* Sadece sm (küçük) ekran boyutu için stil */
+        .card-title {
+            font-size: 4vw; /* Örnek olarak font boyutunu değiştirin */
+        }
+    }
+
+    .table-overflow {
+        overflow: auto !important;
+    }
+
+    .navyBlue {
+        background-color: #001C30;
+        color: #f9fafb;
+    }
+
+        .navyBlue:hover {
+            opacity: 0.85;
+            color: white;
+        }
+
     .Lexend-400 {
         font-family: 'Lexend', sans-serif;
         font-weight: 400;
@@ -256,17 +530,15 @@
         z-index: 999; /* Diğer elementlerden daha üstte görünecek */
     }
 
-    .modal-header{
-        border-bottom:none!important;
+    .modal-header {
+        border-bottom: none !important;
     }
 
     .slide-animation {
-    
-    
         animation: slideDown 0.7s ease-in-out;
-}
+    }
 
-@@keyframes slideDown {
+    @@keyframes slideDown {
         0% {
             transform: translateY(-100%);
         }
@@ -274,8 +546,6 @@
         100% {
             transform: translateY(0);
         }
-
-}
-
+    }
 
 </style>

@@ -1,13 +1,7 @@
 ﻿using Application.Common.Interfaces;
-using Application.Features.Orders.Commands.Delete;
 using Domain.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.Orders.Commands.UndoDelete
 {
@@ -30,7 +24,7 @@ namespace Application.Features.Orders.Commands.UndoDelete
                 .Include(x => x.OrderEvents)
                 .Where(x => x.Id == request.Id).FirstOrDefaultAsync();
 
-            if(order != null)
+            if (order != null)
             {
                 order.IsDeleted= false;
                 order.DeletedOn= DateTime.Now;
