@@ -35,6 +35,12 @@ https://github.com/1neslihan/T-BOT/assets/30401423/dc7323ec-d860-416a-bd50-cd4c6
 
 ![image](https://github.com/1neslihan/T-BOT/assets/30401423/e91b7d8f-4116-4789-86a2-2528a38be05c)
 
+</br>
+
+https://github.com/1neslihan/T-BOT/assets/30401423/0865f1db-5e22-4b8a-8c12-97535b277935
+
+
+
 
 
 
