@@ -5,6 +5,8 @@
 @using Application.Features.Orders.Commands.UndoDelete;
 @using Application.Features.Orders.Queries.GetAll;
 @using Application.Features.Products.Queries.GetAll;
+@using Application.Features.Users.Queries.GetNotifications;
+@using ClosedXML.Excel;
 @using Domain.Common;
 @using Domain.Entities;
 @using Microsoft.AspNetCore.SignalR.Client;
@@ -16,6 +18,7 @@
 @inject NavigationManager navigationManager
 @inject HttpClient httpClient
 @inject IJSRuntime JSRuntime
+@inject IToastService toastService
 
 <PageTitle>Index</PageTitle>
 
@@ -120,7 +123,7 @@
                             }
                             else
                             {
-                                <span class="oi oi-file"></span>
+                                <span class="oi oi-file" @onclick="()=>ExportExcel(detail.Id)"></span>
                             }
                         </td>
                         <td><span class="oi oi-chevron-bottom" @onclick="()=>ToggleAccordion(detail.Id.ToString())"></span></td>
@@ -250,6 +253,7 @@
     private List<OrderGetAllDto> Details = new List<OrderGetAllDto>();
     private List<ProductGetByOrderIdDto> products = new List<ProductGetByOrderIdDto>();
     private string token = "";
+    private bool toasterNotification;
 
     //for Modal
     public string selectedOption = "0";
@@ -296,7 +300,13 @@
         await dataTransferHubConnection.StartAsync();
 
         await dataTransferHubConnection.InvokeAsync("SendDataToConsole", Convert.ToInt32(requestedAmount), Convert.ToInt32(selectedOption), token);
+        if (toasterNotification)
+        {
+            toastService.ShowInfo("New Order Generated");
+        }
+        
         navigationManager.NavigateTo("/livetracking");
+
     }
 
     private async Task ToggleSoftDelete(Guid id)
@@ -364,6 +374,81 @@
         orderCount = Details.Count;
     }
 
+    private async Task ExportExcel(Guid id)
+    {
+        List<ProductGetByOrderIdDto> exportProducts = new List<ProductGetByOrderIdDto>();
+        int pageCount = 1;
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        var productGetByOrderIdResponse = await httpClient.GetAsync($"{BASE_URL}/Products/GetById?orderId={id}&pageNumber={pageCount}&pageSize=15");
+        var content = await productGetByOrderIdResponse.Content.ReadAsStringAsync();
+        var jsonContent = JsonConvert.DeserializeObject<PaginatedList<ProductGetByOrderIdDto>>(content);
+        var jsonObject = JObject.Parse(content);
+        pageCount = Convert.ToInt32(jsonObject["totalPages"]);
+        var newProducts = jsonContent.Items.ToList();
+        exportProducts.AddRange(newProducts); // Mevcut ürün listesine ekle
+        for (int i = 2; i<=pageCount; i++)
+        {
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            productGetByOrderIdResponse = await httpClient.GetAsync($"{BASE_URL}/Products/GetById?orderId={id}&pageNumber={i}&pageSize=15");
+            content = await productGetByOrderIdResponse.Content.ReadAsStringAsync();
+            jsonContent = JsonConvert.DeserializeObject<PaginatedList<ProductGetByOrderIdDto>>(content);
+            newProducts = jsonContent.Items.ToList();
+            exportProducts.AddRange(newProducts);
+        }
+
+
+        using (var workbook = new XLWorkbook())
+        {
+            var worksheet = workbook.Worksheets.Add("Sheet1");
+
+            // Header section
+            worksheet.Cell(1, 1).Value = "ProductName";
+            worksheet.Cell(1, 2).Value = "StoreName"; 
+            worksheet.Cell(1, 3).Value = "ProductPrice"; 
+            worksheet.Cell(1, 4).Value = "ImageURL"; 
+
+            var titleStyle = workbook.Style;
+            titleStyle.Font.Bold = true;
+
+            var titleRow = worksheet.Row(1);
+            titleRow.Style = titleStyle;
+
+
+
+            //product infos
+            for (int row = 2; row <= exportProducts.Count+1; row++)
+            {
+                worksheet.Cell(row, 1).Value = exportProducts[row - 2].Name;
+                worksheet.Cell(row, 2).Value = exportProducts[row - 2].StoreName;
+                worksheet.Cell(row, 3).Value = exportProducts[row - 2].Price;
+                worksheet.Cell(row, 4).Value = exportProducts[row - 2].Picture;
+
+            }
+
+            //table design
+            var dataRange = worksheet.Range(worksheet.Cell(1, 1), worksheet.Cell(exportProducts.Count + 1, 4));
+            var dataTable = dataRange.CreateTable();
+
+            dataTable.Theme = XLTableTheme.TableStyleMedium9;
+
+            worksheet.Columns().AdjustToContents();
+
+            //exporting file
+            using var stream = new MemoryStream();
+
+            workbook.SaveAs(stream);
+            stream.Seek(0, SeekOrigin.Begin);
+
+            var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            var fileName = $"{id.ToString()}.xlsx";
+            await using var ms = new MemoryStream(stream.ToArray());
+
+            await JSRuntime.InvokeVoidAsync("downloadFile", fileName, ms.ToArray(), contentType);
+
+        }
+
+    }
+
     //for Accordion
     private string activeAccordionId = "-1";
     private bool isLoading = false;
@@ -418,7 +503,7 @@
         var content = await productGetByOrderIdResponse.Content.ReadAsStringAsync();
         var jsonContent = JsonConvert.DeserializeObject<PaginatedList<ProductGetByOrderIdDto>>(content);
         var newProducts = jsonContent.Items.ToList();
-        products.AddRange(newProducts); // Mevcut ürün listesine ekle
+        products.AddRange(newProducts);
         currentPage++;
         StateHasChanged();
     }
@@ -431,7 +516,7 @@
 
         if (productGetAllQueryResponse is JArray responseProductArray)
         {
-            // Yanıt bir dizi içeriyor
+
             productCount = responseProductArray.Count;
 
         }
@@ -445,7 +530,7 @@
 
         if (orderGetAllQueryResponse is JArray responseOrderArray)
         {
-            // Yanıt bir dizi içeriyor
+
             orderCount = responseOrderArray.Count;
             foreach (var item in responseOrderArray)
             {
@@ -456,11 +541,22 @@
         }
     }
 
+    private async Task LoadUserSettingsAsync()
+    {
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        var response = await httpClient.GetFromJsonAsync<GetNotificationsDto>($"{BASE_URL}/Users/GetUserPreferences");
+        toasterNotification = response.ToasterNotificationEnable;
+
+    }
+
     protected override async Task OnInitializedAsync()
     {
         token = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "accessToken");
+
+
         await ProductCount();
         await OrderCount();
+        await LoadUserSettingsAsync();
         await base.OnInitializedAsync();
     }
 
@@ -471,7 +567,7 @@
         var jsonPayload = JsonConvert.SerializeObject(payload);
         var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
-        // Authorization başlığını ayarla
+        // Authorization header
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
 
 
@@ -486,7 +582,7 @@
     }
 }
 
-@*<SurveyPrompt Title="How is Blazor working for you?" />*@
+
 <style>
 
     .card {
@@ -495,9 +591,9 @@
     }
 
     @@media (max-width: 576px) {
-        /* Sadece sm (küçük) ekran boyutu için stil */
+        /* Only sm screen settings */
         .card-title {
-            font-size: 4vw; /* Örnek olarak font boyutunu değiştirin */
+            font-size: 4vw; 
         }
     }
 
@@ -526,8 +622,8 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(78, 78, 78, 0.8); /* Arka planın yarı saydam rengi */
-        z-index: 999; /* Diğer elementlerden daha üstte görünecek */
+        background-color: rgba(78, 78, 78, 0.8); 
+        z-index: 999; /
     }
 
     .modal-header {

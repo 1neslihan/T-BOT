@@ -1,7 +1,10 @@
 ﻿@page "/livetracking"
 @using Application.Common.Models.SignalR;
+@using Application.Features.Users.Queries.GetNotifications;
 @using Microsoft.AspNetCore.SignalR.Client;
-@inject HttpClient Http
+@using System.Net.Http.Headers;
+@inject HttpClient httpClient
+@inject IToastService toastService
 
 
 <div class="row">
@@ -20,6 +23,10 @@
             @foreach (var log in logs)
             {
                 <p class="line1">@log.Message <span class="inline-line">@log.SendOn.ToString("g")</span></p>
+                if(log.Message=="OrderCompleted" && toasterNotification)
+                {
+                    toastService.ShowSuccess("Order Completed.");
+                }
             }
 
         </div>
@@ -60,8 +67,19 @@
 
 @code {
 
+    private const string BASE_URL = "https://localhost:7090/api";
     private List<UserLogDto> logs = new List<UserLogDto>();
     private List<FormattedLogDto> details = new List<FormattedLogDto>();
+    private string token;
+    private bool toasterNotification;
+
+    private async Task LoadUserSettingsAsync()
+    {
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        var response = await httpClient.GetFromJsonAsync<GetNotificationsDto>($"{BASE_URL}/Users/GetUserPreferences");
+        toasterNotification = response.ToasterNotificationEnable;
+
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -73,6 +91,7 @@
         userLogHub.On<UserLogDto>("NewUserLogAdded", (UserLogDto) =>
          {
              logs.Add(UserLogDto);
+             
 
              InvokeAsync(StateHasChanged);
          });
@@ -85,7 +104,8 @@
      });
 
         await userLogHub.StartAsync();
-
+        token = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "accessToken");
+        await LoadUserSettingsAsync();
         await base.OnInitializedAsync();
     }
 

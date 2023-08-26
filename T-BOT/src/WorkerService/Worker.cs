@@ -2,12 +2,15 @@
 using Application.Features.OrderEvents.Commands.Add;
 using Application.Features.Orders.Commands.Add;
 using Application.Features.Products.Commands.Add;
+using Application.Features.SendEmail.Commands.OrderDetails;
+using Application.Features.Users.Queries.GetNotifications;
 using Domain.Enums;
 using Microsoft.AspNetCore.SignalR.Client;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 
 namespace WorkerService
@@ -320,20 +323,22 @@ namespace WorkerService
 
             orderEventAddResponse = await SendHttpPostRequest<OrderEventAddCommand, object>(httpClient, "https://localhost:7090/api/OrderEvents/Add", orderEventAddRequest, token);
             await SendLogNotification(orderEventAddRequest.Status.ToString());
-
             int index = 1; // Başlangıç indeksi
             string baseXPath = "/html/body/div[6]/div/div[4]/div[3]/div/div[3]/div[2]/div[2]/div/div";
             string nameXPath = $"{baseXPath}[{index}]/div[1]/div[2]/span/a/div/h3";
-            string storeNameXPath = $"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/a[1]/div[3]";
-            string priceXPath = $"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/a[1]/div[2]/span/span/span[1]/span";
+            string storeNameXPath = $"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/div/a[1]/div[3]";
+            string priceXPath = $"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/div/a[1]/div[2]/span/span/span[1]/span";
             string pictureXPath = $"{baseXPath}[{index}]/div[1]/div[2]/div[1]/div/div/div/a/div/div/img";
-
             if (customAmount > 0)
             {
+
                 while (driver.FindElements(By.XPath(nameXPath)).Count > 0)
                 {
+
                     string productName = driver.FindElement(By.XPath(nameXPath)).Text;
+
                     string storeName = driver.FindElement(By.XPath(storeNameXPath)).Text;
+
                     string price = "";
                     Console.WriteLine($"Product Name:{productName}");
                     Console.WriteLine($"Store Name:{storeName}");
@@ -354,8 +359,8 @@ namespace WorkerService
 
                     index++;
                     nameXPath = $"{baseXPath}[{index}]/div[1]/div[2]/span/a/div/h3";
-                    storeNameXPath = $"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/a[1]/div[3]";
-                    priceXPath=$"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/a[1]/div[2]/span/span/span[1]/span";
+                    storeNameXPath = $"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/div/a[1]/div[3]";
+                    priceXPath=$"{baseXPath}[{index}]/div[1]/div[2]/div[2]/span/div[1]/div/a[1]/div[2]/span/span/span[1]/span";
                     pictureXPath=$"{baseXPath}[{index}]/div[1]/div[2]/div[1]/div/div/div/a/div/div/img";
 
                     formattedLogDto.product_Name= productName;
@@ -375,7 +380,7 @@ namespace WorkerService
                     };
 
                     var productAddResponse = await SendHttpPostRequest<ProductAddCommand, object>(httpClient, "https://localhost:7090/api/Products/Add", productAddRequest, token);
-
+                    Console.WriteLine("Hata Kontrol Noktası 3");
                     await SendDetails(formattedLogDto);
 
                     if (scraperCounter==customAmount)
@@ -422,6 +427,23 @@ namespace WorkerService
             orderEventAddResponse = await SendHttpPostRequest<OrderEventAddCommand, object>(httpClient, "https://localhost:7090/api/OrderEvents/Add", orderEventAddRequest, token);
             await SendLogNotification(orderEventAddRequest.Status.ToString());
             driver.Dispose();
+            index=1;
+
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await httpClient.GetFromJsonAsync<GetNotificationsDto>("https://localhost:7090/api/Users/GetUserPreferences");
+            bool emailNotification = response.EmailNotificationEnable;
+
+            if (emailNotification)
+            {
+                var SendOrderDetailsAddCommandRequest = new SendOrderDetailsAddCommand()
+                {
+                    OrderId = orderId
+                };
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var SendOrderDetailsAddCommandResponse = await httpClient.PostAsJsonAsync("https://localhost:7090/api/Email/OrderDetails", SendOrderDetailsAddCommandRequest);
+
+            }
 
 
 
